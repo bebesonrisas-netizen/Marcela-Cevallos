@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Finova — Finanzas personales</title>
+<meta name="description" content="Finova: finanzas personales, movimientos, préstamos, facturas, documentos y planes de ahorro.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%278%27 fill=%27%234f46e5%27/%3E%3Cpath d=%27M10 24V8h13M10 16h10%27 fill=%27none%27 stroke=%27white%27 stroke-width=%273%27 stroke-linecap=%27round%27/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<!-- GOOGLE ADSENSE: paso 1.
+     Cuando tengas el código de tu cuenta, sustituye TU_ID_DE_EDITOR por los
+     16 dígitos de tu ID ca-pub y descomenta este cargador. Inclúyelo una sola vez.
+     El anuncio está desactivado mientras este código permanezca comentado.
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID_DE_EDITOR" crossorigin="anonymous">
+</script>
+-->
+</head>
+<body>
+<div id="app">
+<header>
+<div class="ui-1">
+<div class="ui-2">
+<svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="Logo Finova">
+<path d="M8 24V8h13" stroke="white" stroke-width="3" stroke-linecap="round"/>
+<path d="M8 16h10" stroke="white" stroke-width="3" stroke-linecap="round"/>
+<path d="M19 22l4-4 4 4" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+</div>
+<div>
+<h1 class="ui-3">Finova</h1>
+<div class="sub" data-i="subtitle">Finanzas personales, claras y bajo control.</div>
+</div>
+</div>
+<div class="actions">
+<select id="lang" class="langs" data-change="event-1" aria-label="lang">
+<option value="es">🇪🇸 Español</option>
+<option value="en">🇬🇧 English</option>
+<option value="fr">🇫🇷 Français</option>
+<option value="de">🇩🇪 Deutsch</option>
+<option value="it">🇮🇹 Italiano</option>
+<option value="pt">🇵🇹 Português</option>
+<option value="sv">🇸🇪 Svenska</option>
+</select>
+<button class="ghost" data-click="event-2">🖨️ PDF</button>
+<button class="primary" data-click="event-3">📄 Word</button>
+</div>
+</header>
+<div class="layout">
+<nav id="nav">
+<button class="active" data-click="event-4">🏠 Inicio</button>
+<button data-click="event-5">💳 Movimientos</button>
+<button data-click="event-6">🤝 Préstamos</button>
+<button data-click="event-7">🧾 Facturas</button>
+<button data-click="event-8">📁 Documentos</button>
+<button data-click="event-9">🐷 Ahorros</button>
+<button data-click="event-10">⚙️ Configuración</button>
+</nav>
+<main class="main">
+<aside class="ad-banner" aria-label="Publicidad">
+  <div class="ad-label">Publicidad</div>
+  <div id="ad-placeholder" class="ad-placeholder">Espacio reservado para un banner</div>
+  <!-- GOOGLE ADSENSE: paso 2.
+       Pega aquí el bloque ins de un anuncio de display adaptable de tu cuenta.
+       Sustituye ambos valores y descomenta el ejemplo. El ID ca-pub debe
+       coincidir con el cargador del head. script.js inicializa este bloque.
+       No pegues identificadores de otra cuenta ni dejes los marcadores activos.
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-TU_ID_DE_EDITOR"
+       data-ad-slot="TU_ID_DE_BLOQUE"
+       data-ad-format="horizontal"
+       data-full-width-responsive="true">
+</ins>
+  -->
+</aside>
+
+
+<section id="inicio">
+<div class="free-intro">
+<span class="tag">✨ FINOVA · GRATIS</span>
+<h2>Tu dinero, más claro.</h2>
+<p class="sub">Organiza ingresos, gastos, préstamos, facturas y metas de ahorro. Sin suscripción y sin conectar tu banco.</p>
+</div>
+<div class="cards">
+<div class="card">
+<div class="label">💵 Ingresos registrados</div>
+<div class="value green" id="income">€0</div>
+</div>
+<div class="card">
+<div class="label">💸 Gastos</div>
+<div class="value red" id="expense">€0</div>
+</div>
+<div class="card">
+<div class="label">🏦 Disponible</div>
+<div class="value blue" id="available">€0</div>
+</div>
+<div class="card">
+<div class="label">🐷 Ahorro objetivo</div>
+<div class="value amber" id="saving">€0</div>
+</div>
+</div>
+<div class="grid2">
+<div class="card">
+<h2>📊 Presupuesto mensual</h2>
+<div class="row">
+<span>Necesidades</span>
+<b id="needPct">0%</b>
+</div>
+<div class="bar">
+<div class="fill" id="needBar">
+</div>
+</div>
+<div class="row">
+<span>Deudas / préstamos</span>
+<b id="debtPct">0%</b>
+</div>
+<div class="bar">
+<div class="fill" id="debtBar">
+</div>
+</div>
+<div class="row">
+<span>Ahorro</span>
+<b id="savePct">0%</b>
+</div>
+<div class="bar">
+<div class="fill" id="saveBar">
+</div>
+</div>
+<div class="ui-4 notice">💡 Regla sugerida: reserva primero tu ahorro, cubre facturas y deudas y después usa el dinero restante para gastos variables.</div>
+</div>
+<div class="card">
+<h2>📅 Próximos pagos</h2>
+<div id="upcoming">
+</div>
+</div>
+</div>
+<div class="section card">
+<h2>➕ Añadir movimiento</h2>
+<div class="formgrid">
+<select id="type" aria-label="type">
+<option value="income">💵 Ingreso</option>
+<option value="expense">💸 Gasto</option>
+</select>
+<input id="desc" placeholder="Descripción" aria-label="Descripción">
+<input id="amount" type="number" step="0.01" placeholder="Importe" aria-label="Importe">
+<select id="cat" aria-label="cat">
+<option>🏠 Vivienda</option>
+<option>🍎 Alimentación</option>
+<option>🚗 Transporte</option>
+<option>🧾 Factura</option>
+<option>💳 Tarjeta</option>
+<option>🎉 Ocio</option>
+<option>🩺 Salud</option>
+<option>📦 Otros</option>
+</select>
+<select id="pay" aria-label="pay">
+<option>💵 Efectivo</option>
+<option>💳 Visa</option>
+<option>💳 Mastercard</option>
+<option>🏦 Transferencia</option>
+<option>📱 Apple Pay</option>
+<option>📱 Google Pay</option>
+</select>
+<input id="date" type="date" aria-label="date">
+<button class="primary" data-click="event-11">Guardar</button>
+</div>
+</div>
+</section>
+<section id="mov" class="hidden">
+<div class="card">
+<h2>💳 Movimientos</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Tipo</th>
+<th>Descripción</th>
+<th>Categoría</th>
+<th>Método</th>
+<th>Importe</th>
+</tr>
+</thead>
+<tbody id="moves">
+</tbody>
+</table>
+</div>
+</section>
+<section id="prest" class="hidden">
+<div class="card">
+<h2>🤝 Préstamos</h2>
+<div class="formgrid">
+<input id="loanName" placeholder="Nombre / banco" aria-label="Nombre / banco">
+<input id="loanTotal" type="number" placeholder="Deuda total" aria-label="Deuda total">
+<input id="loanPaid" type="number" placeholder="Pagado" aria-label="Pagado">
+<input id="loanPay" type="number" placeholder="Cuota mensual" aria-label="Cuota mensual">
+<button class="primary" data-click="event-12">Añadir préstamo</button>
+</div>
+<div id="loans" class="ui-4">
+</div>
+</div>
+</section>
+<section id="fact" class="hidden">
+<div class="card">
+<h2>🧾 Facturas</h2>
+<div class="formgrid">
+<input id="billName" placeholder="Factura (luz, alquiler…)" aria-label="Factura (luz, alquiler…)">
+<input id="billAmt" type="number" placeholder="Importe" aria-label="Importe">
+<input id="billDue" type="date" aria-label="billDue">
+<select id="billStatus" aria-label="billStatus">
+<option>Pendiente</option>
+<option>Pagada</option>
+</select>
+<button class="primary" data-click="event-13">Añadir factura</button>
+</div>
+<div id="bills" class="ui-4">
+</div>
+</div>
+</section>
+<section id="docs" class="hidden">
+<div class="card">
+<h2>📁 Documentos financieros</h2>
+<div class="sub">Fotografía con la cámara, guarda tus comprobantes y encuéntralos por fecha, gasto, ahorro o método de pago.</div>
+<div class="cards section">
+<div class="card">
+<div class="label">📁 Documentos</div>
+<div class="value blue" id="docCount">0</div>
+</div>
+<div class="card">
+<div class="label">🧾 Facturas</div>
+<div class="value amber" id="docBills">0</div>
+</div>
+<div class="card">
+<div class="label">🎟️ Tickets</div>
+<div class="value green" id="docTickets">0</div>
+</div>
+<div class="card">
+<div class="label">💳 Pagos</div>
+<div class="value red" id="docPayments">0</div>
+</div>
+</div>
+<div class="section card">
+<h2>📷 Escanear / subir</h2>
+<div class="actions">
+<button class="primary" data-click="event-14">📷 Abrir cámara</button>
+<label class="ui-5 ghost">📂 Elegir archivo<input id="docFile" type="file" accept="image/*,.pdf" class="ui-6" data-change="event-15" aria-label="docFile">
+</label>
+</div>
+<div class="ui-7 formgrid">
+<input id="docName" placeholder="Nombre del documento" aria-label="Nombre del documento">
+<input id="docDate" type="date" aria-label="docDate">
+<select id="docType" aria-label="docType">
+<option>🧾 Factura</option>
+<option>🎟️ Ticket</option>
+<option>💸 Gasto</option>
+<option>🐷 Ahorro</option>
+<option>💳 Pago</option>
+<option>📄 Otro</option>
+</select>
+<select id="docPay" aria-label="docPay">
+<option>💳 Visa</option>
+<option>💳 Mastercard</option>
+<option>💵 Efectivo</option>
+<option>🏦 Transferencia</option>
+<option>📱 Apple Pay</option>
+<option>📱 Google Pay</option>
+</select>
+<input id="docCat" placeholder="Tipo de gasto / categoría" aria-label="Tipo de gasto / categoría">
+<button class="primary" data-click="event-16">💾 Guardar documento</button>
+</div>
+<div id="docChosen" class="sub">Ningún archivo seleccionado.</div>
+<div class="sub">En móvil puedes abrir la cámara para fotografiar un ticket o factura. Los documentos se guardan localmente en este navegador.</div>
+</div>
+<div class="section card">
+<h2>🔎 Buscar y filtrar</h2>
+<div class="formgrid">
+<input id="docSearch" placeholder="Buscar por nombre…" data-input="event-17" aria-label="Buscar por nombre…">
+<select id="filterDocType" data-change="event-18" aria-label="filterDocType">
+<option value="">Todos los tipos</option>
+<option>🧾 Factura</option>
+<option>🎟️ Ticket</option>
+<option>💸 Gasto</option>
+<option>🐷 Ahorro</option>
+<option>💳 Pago</option>
+<option>📄 Otro</option>
+</select>
+<select id="filterDocPay" data-change="event-19" aria-label="filterDocPay">
+<option value="">Todos los pagos</option>
+<option>💳 Visa</option>
+<option>💳 Mastercard</option>
+<option>💵 Efectivo</option>
+<option>🏦 Transferencia</option>
+<option>📱 Apple Pay</option>
+<option>📱 Google Pay</option>
+</select>
+<button class="ghost" data-click="event-20">📅 Ordenar por fecha</button>
+</div>
+</div>
+<div id="documents" class="section">
+</div>
+</div>
+</section>
+<section id="ahorro" class="hidden">
+<div class="card">
+<h2>🐷 Plan de ahorro</h2>
+<div class="formgrid">
+<input id="goal" type="number" placeholder="Objetivo (€)" aria-label="Objetivo (€)">
+<input id="saved" type="number" placeholder="Ya ahorrado (€)" aria-label="Ya ahorrado (€)">
+<input id="months" type="number" placeholder="Meses" aria-label="Meses">
+<button class="primary" data-click="event-21">Calcular</button>
+</div>
+<div id="saveResult" class="ui-4">
+</div>
+</div>
+</section>
+<section id="config" class="hidden">
+<div class="card">
+<h2>⚙️ Configuración</h2>
+<p class="sub">Finova es gratuita. Tus registros y documentos se guardan en este navegador; no se sincronizan entre dispositivos.</p>
+<div class="formgrid">
+<input id="currency" value="€" placeholder="Símbolo de moneda" aria-label="Símbolo de moneda">
+<button class="primary" data-click="event-22">Guardar moneda</button>
+<button class="ghost" data-click="event-23">🗑️ Borrar todos los datos</button>
+</div>
+</div>
+<div class="section card">
+<h2>📲 Comparte Finova</h2>
+<div id="qrBox" class="ui-8">
+</div>
+<p class="sub">El QR enlaza a la dirección donde abras esta web. La imagen se genera con un servicio externo.</p>
+<button class="ghost" data-click="event-24">🔗 Copiar enlace</button>
+</div>
+<div class="section card">
+<h2>🔒 Tus datos</h2>
+<p class="sub">Conserva los documentos originales. Borrar los datos del navegador elimina tus registros. La cámara permite fotografiar documentos, pero no extrae automáticamente sus importes. Finova no conecta con tu banco ni realiza pagos.</p>
+</div>
+</section>
+</main>
+</div>
+</div>
+<script src="script.js" defer>
+</script>
+</body>
+</html>
