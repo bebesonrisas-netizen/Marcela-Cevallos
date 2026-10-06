@@ -82,4 +82,4 @@ async function submitAuth(){const email=authEmail.value.trim();
     alert('No se pudo completar el acceso: '+e.message);
   };} function showPlans(){authModal.classList.remove('show');plansModal.classList.add('show')}function closeModal(){authModal.classList.remove('show');plansModal.classList.remove('show')}
 handleStripeReturn();date.value=new Date().toISOString().slice(0,10);docDate.value=new Date().toISOString().slice(0,10);render();setupQR();document.getElementById('qrHome').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&margin=8&data='+encodeURIComponent(location.href)+'" alt="Código QR de Finova" width="150" height="150">';
-</script></body></html>
+}/script></body></html>
