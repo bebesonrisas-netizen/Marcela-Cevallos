@@ -37,8 +37,7 @@ function exportWord(){let text='MI FINANZAS\n\nINGRESOS: '+income.textContent+'\
 const T={es:['Controla, paga y ahorra con claridad.'],en:['Track, pay and save with clarity.'],fr:['Suivez, payez et épargnez clairement.'],de:['Finanzen klar verfolgen, zahlen und sparen.'],it:['Controlla, paga e risparmia con chiarezza.'],pt:['Controle, pague e poupe com clareza.'],sv:['Följ, betala och spara med tydlighet.']};function setLang(){document.querySelector('[data-i="subtitle"]').textContent=T[lang.value][0]||T.es[0]}
 async function startStripeCheckout(plan){
   try{
-    localStorage.setItem('finova_demo_user',JSON.stringify({email:user.email,name:(user.user_metadata&&user.user_metadata.full_name)||'Marcela'}));    const out=await res.json();
-    if(!res.ok||!out.url)throw new Error(out.error||'No se pudo iniciar Stripe Checkout');
+    const res=await fetch('/.netlify/functions/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan,email:localStorage.getItem('finova_demo_user')||''})});const out=await res.json();    if(!res.ok||!out.url)throw new Error(out.error||'No se pudo iniciar Stripe Checkout');
     window.location.href=out.url;
   }catch(e){alert('No se pudo abrir el pago seguro: '+e.message)}
 }
@@ -98,5 +97,12 @@ function mostrarUsuario(){
       saludo.style.display='inline-flex';
     }
   }
-}
-mostrarUsuario();</script></body></html>
+}netlifyIdentity.on('init', user => {
+  if (user) {
+    localStorage.setItem(
+      'finova_demo_name',
+      (user.user_metadata && user.user_metadata.full_name) || user.email.split('@')[0]
+    );
+    mostrarUsuario();
+  }
+});mostrarUsuario();</script></body></html>
