@@ -3,16 +3,34 @@
 @media(max-width:950px){.layout{grid-template-columns:1fr}nav{display:flex;overflow:auto;border-right:0;border-bottom:1px solid var(--line);position:static;height:auto;top:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav button{min-width:130px}.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.formgrid{grid-template-columns:repeat(2,1fr)}.heroGrid,.planGrid{grid-template-columns:1fr}}
 @media(max-width:600px){nav{overflow-x:auto;justify-content:flex-start;gap:5px}nav button{flex:0 0 auto!important;min-width:104px!important}nav button:first-child{min-width:150px!important}.main{padding-bottom:112px!important}header{padding:14px 15px;align-items:flex-start;flex-direction:column;position:sticky;top:0}.headerBrand{width:100%;justify-content:space-between}.headerActions{width:100%}.headerActions button{flex:1}.main{padding:12px 12px 88px}.cards{grid-template-columns:repeat(2,1fr);gap:9px}.card{padding:14px;border-radius:14px}.value{font-size:20px}.formgrid{grid-template-columns:1fr}.commercial{padding:16px;margin:10px 0 16px}.heroGrid{gap:12px}.planGrid{gap:9px}.appBanner{position:relative}.appBanner button{width:100%}.tableWrap{margin:0 -14px;padding:0 14px}nav{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:15;background:light-dark(#fff,#181b22);border-top:1px solid var(--line);border-bottom:0;padding:7px 5px;box-shadow:0 -8px 25px #00000012}nav button{min-width:0;flex:1;text-align:center;font-size:11px;padding:8px 4px;margin:0;border-radius:9px;white-space:nowrap}nav button:nth-child(1)::first-letter{font-size:16px}.section{margin-top:14px}.grid2{gap:10px}.modal{padding:10px}.modalBox{padding:18px;border-radius:18px;max-height:92vh;overflow:auto}.store button{flex:1}.commercial .actions button{width:100%}}
 
-/* Finova: tema lavanda suave */
-:root{--blue:#74699a}
-.primary{background:#74699a}.primary:hover{background:#625781}
-.ghost{background:#f4f2f8;color:#554b71}
-nav button.active{background:#f2f0f7;color:#514766;font-weight:650}
-nav button:hover:not(.active){background:#f7f6fa;color:#514766}
-.tag{background:#f4f2f8;color:#554b71}
-.commercial{background:linear-gradient(135deg,#f8f6fc,#f5fafb);border-color:#e7e1f0}
-a{color:#625781;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:3px}
-button:focus-visible,a:focus-visible{outline:2px solid #9d92bd;outline-offset:2px}
+/* Finova 2026: panel profesional, lavanda discreto y navegación limpia */
+:root{--blue:#635a96;--bg:#f7f8fb;--line:#e8eaf0;--shadow:0 6px 22px #20243a08}
+body,#app{background:#f7f8fb;color:#222638}
+header{background:#fff;box-shadow:0 2px 12px #22263808;border-bottom:1px solid #edf0f4}
+header h1{font-size:26px;letter-spacing:-.7px}
+header .sub{color:#777e90}
+nav{background:#fff;border-right:1px solid #edf0f4}
+nav button{border-radius:12px;padding:12px 13px;margin:4px 0;font-weight:500}
+nav button.active{background:#f1eff8;color:#514978;font-weight:700}
+nav button:hover:not(.active){background:#f7f6fa;color:#514978}
+.main{max-width:1460px;padding:28px}
+.card{border-color:#eceef4;border-radius:18px;box-shadow:0 6px 24px #28304b08}
+.card h2,.section h2{letter-spacing:-.35px}
+.primary{background:#635a96;color:#fff;box-shadow:none;font-weight:600}
+.primary:hover{background:#534b81}
+.ghost{background:#f5f4f9;color:#514978}
+.ghost:hover{background:#eeebf6}
+.tag{background:#f3f1f9;color:#5a527e}
+.commercial{background:linear-gradient(120deg,#f7f4fd 0%,#f8f9ff 58%,#eff8fa 100%);border:1px solid #e8e4f1;border-radius:22px}
+.bar{background:#f0f1f5}.fill{background:#8178af}
+a{color:#5c5386;text-decoration:none}a:hover{text-decoration:underline;text-underline-offset:3px}
+button:focus-visible,a:focus-visible{outline:2px solid #9b91bd;outline-offset:3px}
+nav button[onclick="openFinovaAssistant()"]{background:#f0edf8!important;color:#514978!important;font-weight:700!important}
+.main>div:first-child>button[onclick="openFinovaAssistant()"]{background:#635a96!important;color:white!important;border-radius:14px;padding:15px!important;box-shadow:0 6px 16px #635a961f}
+.appBanner{background:linear-gradient(120deg,#f5f3fa,#f2f9fa)!important;border-color:#e6e3ef!important;box-shadow:none!important}
+#inicio>.card:first-child{border-color:#e9e5f2!important;background:#fff!important}
+@media(max-width:950px){.main{padding:16px}}
+@media(max-width:600px){header{position:relative}.main{padding:14px 12px 100px}nav{background:#fff}nav button{margin:0}nav button.active{background:#f1eff8}}
 </style>
 <!-- Carga global de anuncios AdSense pausada mientras se corrige la política de pantallas sin contenido editorial. -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script></head><body><div id="app"><header><div style="display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#4f46e5,#0891b2);display:grid;place-items:center;box-shadow:0 8px 20px #4f46e544"><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="Logo Finova"><path d="M8 24V8h13" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M8 16h10" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M19 22l4-4 4 4" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h1 style="letter-spacing:-.5px">Finova</h1><div class="sub" data-i="subtitle">Finanzas personales, claras y bajo control.</div></div></div><div class="actions"><select id="lang" class="langs" onchange="setLang()"><option value="es">🇪🇸 Español</option><option value="en">🇬🇧 English</option><option value="fr">🇫🇷 Français</option><option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option><option value="pt">🇵🇹 Português</option><option value="sv">🇸🇪 Svenska</option></select><button class="ghost" onclick="window.print()">🖨️ PDF</button><button class="primary" onclick="exportWord()">📄 Word</button></div></header><div class="layout"><nav id="nav"><button class="primary" style="background:#6d28d9;color:white;font-weight:800" onclick="openFinovaAssistant()">🤖 ABRIR FINOVA IA</button><button class="active" onclick="show('inicio',this)">🏠 Inicio</button><button onclick="show('mov',this)">💳 Movimientos</button><button onclick="show('prest',this)">🤝 Préstamos</button><button onclick="show('fact',this)">🧾 Facturas</button><button onclick="show('docs',this)">📁 Documentos</button><button onclick="show('ahorro',this)">🐷 Ahorros</button><button onclick="show('assistant',this)">🤖 Finova IA</button><button onclick="show('config',this)">⚙️ Configuración</button></nav><main class="main"><div style="margin:0 0 14px"><button class="primary" style="background:#6d28d9;font-weight:800;width:100%;font-size:16px" onclick="openFinovaAssistant()">🤖 Abrir mi agente Finova IA · Hablar o escribir</button></div>
