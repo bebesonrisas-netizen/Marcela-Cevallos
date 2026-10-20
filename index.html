@@ -49,6 +49,49 @@ nav button[onclick="openFinovaAssistant()"]{background:#f0edf8!important;color:#
 .finovaDashboardIntro{order:0}
 @media(max-width:950px){.finovaDashboardIntro{align-items:flex-start;flex-direction:column}}
 @media(max-width:600px){.finovaDashboardIntro h2{font-size:27px}#inicio>.cards{gap:10px}#inicio>.cards>.card{padding:15px;min-height:112px}#inicio>.cards .value{font-size:22px;margin-top:15px}}
+
+/* Finova: interfaz violeta inspirada en el diseño aprobado */
+:root{--blue:#7948e9;--bg:#f6f3ff;--line:#eee9fa;--shadow:0 9px 30px #5330a30e}
+body,#app{background:#f7f5ff;color:#1d1b38}
+header{background:#fff;box-shadow:none;border-bottom:1px solid #eeeafa}
+header h1{color:#4820a6;font-weight:850}
+header .sub{color:#6d6589}
+nav{background:#f9f7ff;border-right:1px solid #ebe5fb}
+nav button{font-weight:560;border-radius:13px;padding:13px}
+nav button.active{background:linear-gradient(110deg,#a66cf5,#7847e6);color:white;box-shadow:0 7px 17px #7548dc2c}
+nav button:hover:not(.active){background:#eee8fd;color:#6035b8}
+nav button[onclick="openFinovaAssistant()"]{background:#eee7ff!important;color:#6035b8!important}
+.primary{background:linear-gradient(115deg,#9560ef,#7542dd);color:#fff}
+.primary:hover{background:#7242d4}
+.ghost{background:#f0eaff;color:#6034bb}
+.card{background:white;border:1px solid #eeeafa;border-radius:20px;box-shadow:0 8px 26px #4b31900c}
+.main{max-width:1600px}
+.finovaVisualDashboard{display:grid!important;grid-template-columns:minmax(0,1.8fr) minmax(265px,.85fr);align-items:start;gap:18px}
+.finovaVisualDashboard>.finovaDashboardIntro{grid-column:1/-1;order:0}
+.finovaVisualDashboard>.cards{grid-column:1/-1;order:1;grid-template-columns:repeat(4,minmax(0,1fr))}
+.finovaVisualDashboard>.cards>.card{border-radius:20px;min-height:136px;background:#fff;box-shadow:0 10px 28px #6037c00e}
+.finovaVisualDashboard>.cards .value{font-size:clamp(23px,2.5vw,35px);color:#241a48}
+.finovaVisualDashboard>.card:first-of-type{grid-column:1;order:2;background:linear-gradient(125deg,#a46cf6,#7d48e8 62%,#6135cb)!important;color:white;border:0!important;min-height:290px;overflow:hidden;position:relative}
+.finovaVisualDashboard>.card:first-of-type:before{content:"";position:absolute;inset:auto -20% -90px 0;height:180px;border:2px solid #ffffff55;border-radius:50%;transform:rotate(-8deg);pointer-events:none}
+.finovaVisualDashboard>.card:first-of-type h2,.finovaVisualDashboard>.card:first-of-type .sub{color:white}
+.finovaVisualDashboard>.card:first-of-type #finovaTrendSummary{color:#fff!important}
+.finovaVisualDashboard>.finovaVisualAI{grid-column:2;order:3;min-height:290px;padding:22px}
+.finovaAIHead{display:flex;align-items:center;gap:13px}
+.finovaAIHead>span{background:#efe8ff;color:#7244e4;padding:13px;border-radius:15px;font-size:24px}
+.finovaAIHead h2{margin:0 0 4px;color:#251d47}.finovaAIHead small{color:#827899}
+.finovaVisualAI>p{font-weight:750;margin:23px 0 15px}
+.finovaAIChips{display:flex;gap:8px;flex-wrap:wrap}
+.finovaAIChips button{background:#f0eaff;color:#6635ce;min-height:34px;border-radius:20px;font-size:12px;padding:8px 11px}
+.finovaAICTA{background:linear-gradient(90deg,#eee7ff,#e6d8ff);color:#6035bc;width:100%;margin-top:20px;text-align:left;border-radius:16px}
+.finovaVisualDashboard>.grid2{grid-column:1/-1;order:5}
+.finovaVisualDashboard>.commercial{grid-column:1/-1;order:6;background:#fff;border-color:#eeeafa}
+.finovaVisualDashboard>.finovaVisualShortcuts{grid-column:1/-1;order:4;display:flex;gap:12px;flex-wrap:wrap}
+.finovaVisualShortcuts button{background:#fff;color:#5e32bd;border:1px solid #e7dcff;border-radius:13px;padding:13px 18px;font-weight:650}
+.finovaDashboardIntro h2{color:#251d47;font-size:35px}
+.finovaEyebrow{color:#8a56dc}
+#inicio>.commercial .planGrid{display:none}
+@media(max-width:1000px){.finovaVisualDashboard{grid-template-columns:1fr}.finovaVisualDashboard>.card:first-of-type,.finovaVisualDashboard>.finovaVisualAI{grid-column:1}.finovaVisualDashboard>.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.finovaVisualDashboard{gap:12px}.finovaDashboardIntro h2{font-size:29px}.finovaVisualDashboard>.cards{gap:10px}.finovaVisualDashboard>.cards>.card{min-height:112px}.finovaVisualDashboard>.card:first-of-type{min-height:250px}.finovaVisualShortcuts button{flex:1;font-size:12px}}
 </style>
 <!-- Carga global de anuncios AdSense pausada mientras se corrige la política de pantallas sin contenido editorial. -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script></head><body><div id="app"><header><div style="display:flex;align-items:center;gap:12px"><div style="width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#4f46e5,#0891b2);display:grid;place-items:center;box-shadow:0 8px 20px #4f46e544"><svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-label="Logo Finova"><path d="M8 24V8h13" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M8 16h10" stroke="white" stroke-width="3" stroke-linecap="round"/><path d="M19 22l4-4 4 4" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h1 style="letter-spacing:-.5px">Finova</h1><div class="sub" data-i="subtitle">Finanzas personales, claras y bajo control.</div></div></div><div class="actions"><select id="lang" class="langs" onchange="setLang()"><option value="es">🇪🇸 Español</option><option value="en">🇬🇧 English</option><option value="fr">🇫🇷 Français</option><option value="de">🇩🇪 Deutsch</option><option value="it">🇮🇹 Italiano</option><option value="pt">🇵🇹 Português</option><option value="sv">🇸🇪 Svenska</option></select><button class="ghost" onclick="window.print()">🖨️ PDF</button><button class="primary" onclick="exportWord()">📄 Word</button></div></header><div class="layout"><nav id="nav"><button class="primary" style="background:#6d28d9;color:white;font-weight:800" onclick="openFinovaAssistant()">🤖 ABRIR FINOVA IA</button><button class="active" onclick="show('inicio',this)">🏠 Inicio</button><button onclick="show('mov',this)">💳 Movimientos</button><button onclick="show('prest',this)">🤝 Préstamos</button><button onclick="show('fact',this)">🧾 Facturas</button><button onclick="show('docs',this)">📁 Documentos</button><button onclick="show('ahorro',this)">🐷 Ahorros</button><button onclick="show('assistant',this)">🤖 Finova IA</button><button onclick="show('config',this)">⚙️ Configuración</button></nav><main class="main"><div style="margin:0 0 14px"><button class="primary" style="background:#6d28d9;font-weight:800;width:100%;font-size:16px" onclick="openFinovaAssistant()">🤖 Abrir mi agente Finova IA · Hablar o escribir</button></div>
