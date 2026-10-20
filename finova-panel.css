@@ -4,3 +4,16 @@ header{padding:12px 20px}h1{font-size:22px}.main{max-width:1200px;padding:18px}.
 .finova-quick{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 14px;background:#fff;border:1px solid #dce6ef;border-radius:14px;margin-bottom:12px}.finova-quick strong{color:var(--finova-navy)}.finova-quick .actions{gap:6px}.finova-quick button{min-height:38px}.finova-quick .primary{background:var(--finova-navy)}.finova-quick .ghost{background:#e8f6f6;color:#075e67}
 @media(max-width:950px){.layout{grid-template-columns:1fr}.heroGrid{grid-template-columns:1fr 220px}nav{position:static;height:auto}}
 @media(max-width:600px){header{padding:10px 12px}.main{padding:10px 10px 82px}.finova-quick{padding:10px;align-items:stretch}.finova-quick .actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.finova-quick button{font-size:12px;padding:8px 5px}.heroGrid{grid-template-columns:1fr}.commercial{padding:12px}.commercial .planGrid{display:none}.cards{gap:8px}.card{padding:11px}.value{font-size:19px}.grid2{margin-top:9px}nav{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;padding:5px 2px}nav button{font-size:10px;min-width:0;padding:8px 2px}.main h2{font-size:17px}}
+
+/* Cleaner, faster visual hierarchy for the home dashboard */
+#inicio .commercial{border-radius:16px;box-shadow:0 6px 22px rgba(18,46,72,.06)}
+#inicio .commercial h2{font-size:clamp(21px,2.2vw,29px)!important;line-height:1.2;letter-spacing:-.02em;margin:8px 0}
+#inicio .commercial .sub{line-height:1.45!important}
+#inicio .card{box-shadow:0 3px 14px rgba(18,46,72,.035);border-radius:14px}
+#inicio .cards .card .label{font-size:12px;letter-spacing:.01em}
+#inicio .cards .card .value{font-variant-numeric:tabular-nums}
+#inicio .finova-quick{position:relative;box-shadow:0 5px 20px rgba(18,46,72,.05)}
+#inicio .finova-quick button{border-radius:9px;transition:transform .15s ease,box-shadow .15s ease}
+#inicio .finova-quick button:hover{transform:translateY(-1px);box-shadow:0 4px 10px rgba(18,46,72,.08)}
+@media(max-width:600px){#inicio .commercial{padding:12px}#inicio .commercial h2{font-size:20px!important}#inicio .commercial p{font-size:13px!important}#inicio .cards{grid-template-columns:repeat(2,minmax(0,1fr))}#inicio .finova-quick{margin-bottom:9px}}
+@media(prefers-reduced-motion:reduce){#inicio .finova-quick button{transition:none}#inicio .finova-quick button:hover{transform:none}}
