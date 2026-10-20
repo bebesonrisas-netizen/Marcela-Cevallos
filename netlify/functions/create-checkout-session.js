@@ -13,7 +13,8 @@ exports.handler = async (event) => {
     const { plan, email } = JSON.parse(event.body || '{}');
     const price = PRICE_LOOKUP[plan];
     if (!price) return { statusCode: 400, body: JSON.stringify({ error: 'Plan no válido' }) };
-    const origin = event.headers.origin || 'https://storied-pika-1d2990.netlify.app';
+    const configuredOrigin = process.env.URL || 'https://storied-pika-1d2990.netlify.app';
+    const origin = new URL(configuredOrigin).origin; // Never trust the browser-supplied Origin for payment redirects.
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price, quantity: 1 }],
