@@ -11,7 +11,14 @@
   const title=document.createElement("strong");title.textContent=remaining?"🎁 Prueba Premium: "+remaining+" día(s) restantes":"⏰ Tu prueba Premium de 12 días ha terminado";
   const desc=document.createElement("p");desc.className="sub";desc.style.margin="6px 0 0";
   desc.textContent=remaining?"Finaliza el "+new Date(ends).toLocaleDateString("es-ES")+". Al terminar, no habrá cobros automáticos ni recargos; solo contratarás Premium si lo eliges expresamente.":"Puedes seguir usando las funciones gratuitas. No se realizará ningún cobro automático ni recargo al finalizar la prueba. Premium solo se activará mediante una contratación voluntaria.";
-  box.append(title,desc);home.prepend(box);
+  const actions=document.createElement("div");actions.className="actions";actions.style.marginTop="10px";
+  const upgrade=document.createElement("button");upgrade.type="button";upgrade.className="primary";
+  upgrade.textContent="Seguir con la versión extendida";
+  upgrade.addEventListener("click",()=>{
+   const confirmed=window.confirm("Finova Premium mensual es una suscripción de pago recurrente. El precio y las condiciones definitivas aparecerán en Stripe antes de confirmar. ¿Quieres continuar al pago seguro?");
+   if(confirmed&&typeof window.startStripeCheckout==="function")window.startStripeCheckout("finova_premium_monthly");
+  });
+  actions.appendChild(upgrade);box.append(title,desc,actions);home.prepend(box);
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
 })();
