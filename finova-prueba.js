@@ -10,7 +10,7 @@
   const box=document.createElement("div");box.id="finovaTrialNotice";box.className="card";box.style.cssText="margin:12px 0;padding:14px;border-left:4px solid #7366d9";
   const title=document.createElement("strong");title.textContent=remaining?"🎁 Prueba Premium: "+remaining+" día(s) restantes":"⏰ Tu prueba Premium de 12 días ha terminado";
   const desc=document.createElement("p");desc.className="sub";desc.style.margin="6px 0 0";
-  desc.textContent=remaining?"Finaliza el "+new Date(ends).toLocaleDateString("es-ES")+". Al terminar, no habrá cobros automáticos ni recargos; solo contratarás Premium si lo eliges expresamente.":"Puedes seguir usando las funciones gratuitas. No se realizará ningún cobro automático ni recargo al finalizar la prueba. Premium solo se activará mediante una contratación voluntaria.";
+  if(remaining>0&&remaining<=3){box.style.borderLeftColor="#d97706";}\n  desc.textContent=remaining?"Finaliza el "+new Date(ends).toLocaleDateString("es-ES")+". Al terminar, no habrá cobros automáticos ni recargos; solo contratarás Premium si lo eliges expresamente.":"Puedes seguir usando las funciones gratuitas. No se realizará ningún cobro automático ni recargo al finalizar la prueba. Premium solo se activará mediante una contratación voluntaria.";
   const actions=document.createElement("div");actions.className="actions";actions.style.marginTop="10px";
   const upgrade=document.createElement("button");upgrade.type="button";upgrade.className="primary";
   upgrade.textContent="Seguir con la versión extendida";
