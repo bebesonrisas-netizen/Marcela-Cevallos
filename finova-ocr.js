@@ -29,7 +29,7 @@ function dateFrom(text){
  if(!m)return "";
  const iso=m[1].length===4?[m[1],m[2],m[3]]:[m[3],m[2],m[1]];
  const d=iso.map((x,i)=>i?x.padStart(2,"0"):x).join("-");
- return !Number.isNaN(Date.parse(d))?d:"";
+ const parsed=new Date(d+"T12:00:00Z");return !Number.isNaN(parsed.getTime())&&parsed.toISOString().slice(0,10)===d?d:"";
 }
 async function read(){
  const file=document.getElementById("docFile")?.files?.[0],status=document.getElementById("finovaOcrStatus"),button=document.getElementById("finovaOcrButton");
@@ -46,7 +46,7 @@ async function read(){
  if(vendor&&!vendor.value)vendor.value=(lines[0]||"").slice(0,90);
  if(name&&!name.value)name.value=(lines[0]||file.name).slice(0,90);
  const a=amountFrom(text);if(amount&&a&&!amount.value)amount.value=a;
- const d=dateFrom(text);if(date&&d)date.value=d;
+ const d=dateFrom(text);if(date&&d&&!date.value)date.value=d;
  status.textContent="Lectura terminada. Revisa comercio, importe y fecha antes de pulsar Guardar. El OCR puede equivocarse.";
  }catch(e){status.textContent="No se pudo leer la imagen: "+e.message+". Puedes guardar los datos manualmente.";}
  finally{button.disabled=false;}
