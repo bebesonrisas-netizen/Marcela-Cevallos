@@ -398,4 +398,22 @@ function invoice(){const client=el('betaInvoiceClient').value.trim(),concept=el(
 el('betaForecastRefresh').addEventListener('click',forecast);el('betaInvoiceCreate').addEventListener('click',invoice);forecast();
 })();
 </script>
+
+<script>
+(function(){
+'use strict';
+const translations={
+es:['Finova AI · Herramientas beta','Copia de seguridad','Restaurar','Dictar gasto','Fotografiar recibo','Actualizar previsión','Crear borrador de factura','Cliente','Concepto','Importe (sin impuestos)'],
+en:['Finova AI · Beta tools','Download backup','Restore','Dictate expense','Photograph receipt','Refresh forecast','Create invoice draft','Customer','Description','Amount (before tax)'],
+sv:['Finova AI · Betaverktyg','Ladda ner säkerhetskopia','Återställ','Diktera utgift','Fotografera kvitto','Uppdatera prognos','Skapa fakturautkast','Kund','Beskrivning','Belopp (före skatt)'],
+fr:['Finova AI · Outils bêta','Télécharger la sauvegarde','Restaurer','Dicter une dépense','Photographier un reçu','Actualiser les prévisions','Créer un brouillon de facture','Client','Description','Montant (hors taxes)'],
+de:['Finova AI · Beta-Werkzeuge','Sicherung herunterladen','Wiederherstellen','Ausgabe diktieren','Beleg fotografieren','Prognose aktualisieren','Rechnungsentwurf erstellen','Kunde','Beschreibung','Betrag (ohne Steuern)'],
+it:['Finova AI · Strumenti beta','Scarica backup','Ripristina','Detta una spesa','Fotografa ricevuta','Aggiorna previsione','Crea bozza fattura','Cliente','Descrizione','Importo (imposte escluse)'],
+pt:['Finova AI · Ferramentas beta','Transferir cópia de segurança','Restaurar','Ditar despesa','Fotografar recibo','Atualizar previsão','Criar rascunho de fatura','Cliente','Descrição','Valor (sem impostos)']};
+const ids=['betaBackup','betaRestore','betaVoice','betaCamera','betaForecastRefresh','betaInvoiceCreate'];
+function apply(){const lang=document.getElementById('lang')?.value||'es',t=translations[lang]||translations.es,root=document.getElementById('finovaBetaTools');if(!root)return;const summary=root.querySelector('summary');if(summary)summary.textContent='✦ '+t[0];ids.forEach((id,i)=>{const e=document.getElementById(id);if(e)e.textContent=t[i+1]});[['betaInvoiceClient',7],['betaInvoiceConcept',8],['betaInvoiceAmount',9]].forEach(([id,n])=>{const e=document.getElementById(id);const label=e?.previousElementSibling;if(label?.tagName==='LABEL')label.textContent=t[n]});}
+document.getElementById('lang')?.addEventListener('change',apply);
+apply();
+})();
+</script>
 </body></html>
