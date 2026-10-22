@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_unconfigured');
 
 const PRICE_LOOKUP = {
   finova_premium_monthly: 'price_1UNZBO0WT1XqdqLbImMySh5l',
