@@ -5,7 +5,8 @@ exports.handler = async (event) => {
     const evt = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
     if (evt.type === 'checkout.session.completed' || evt.type === 'customer.subscription.updated' || evt.type === 'customer.subscription.deleted') {
       console.log('Finova Stripe event:', evt.type, evt.data.object.id);
-      // Producción: actualizar aquí el plan del usuario en la base de datos de Finova.
+      // IMPORTANT: No se activa Premium hasta persistir el estado verificado en una base de datos.
+      // La vinculación de customer/subscription con user_id debe realizarse en backend.
     }
     return { statusCode: 200, body: JSON.stringify({ received: true }) };
   } catch (err) {
