@@ -20,11 +20,9 @@ exports.handler = async (event) => {
       'invoice.payment_failed'
     ]);
     if (subscriptionEvents.has(evt.type)) {
-      // Premium remains disabled until a durable, authenticated entitlement
-      // store is implemented. A 503 forces Stripe to retry instead of
-      // silently acknowledging an event that was never persisted.
-      console.warn('Finova Premium entitlement storage not configured:', evt.type, evt.id);
-      return { statusCode: 503, body: 'Premium entitlement storage not configured' };
+      // Stripe is the source of truth; subscription-status reads Stripe
+      // directly. No unpersisted local entitlement is granted here.
+      console.info('Finova Stripe event verified:', evt.type, evt.id);
     }
     return { statusCode: 200, body: JSON.stringify({ received: true }) };
   } catch (err) {
