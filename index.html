@@ -416,4 +416,8 @@ document.getElementById('lang')?.addEventListener('change',apply);
 apply();
 })();
 </script>
+
+<script>
+(function(){'use strict';const root=document.getElementById('finovaBetaTools');if(!root)return;const btn=document.createElement('button');btn.type='button';btn.textContent='📊 Exportar movimientos CSV';btn.title='Exportar movimientos personales y de negocio para abrir en Excel';root.appendChild(btn);btn.addEventListener('click',()=>{try{const personal=JSON.parse(localStorage.getItem('mi_finanzas_v1')||'{}'),business=JSON.parse(localStorage.getItem('finova_business_v1')||'{}');const entries=[...(Array.isArray(personal.moves)?personal.moves:[]).map(x=>({...x,mode:'Personal'})),...(Array.isArray(business.moves)?business.moves:[]).map(x=>({...x,mode:'Negocios'}))];const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';const rows=[['Modalidad','Fecha','Tipo','Descripción','Categoría','Método','Importe'],...entries.map(x=>[x.mode,x.date,x.type,x.desc,x.cat,x.pay,x.amount])];const csv='\uFEFF'+rows.map(row=>row.map(esc).join(';')).join('\\r\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='finova-movimientos-'+new Date().toISOString().slice(0,10)+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1500);document.getElementById('betaStatus').textContent='CSV exportado: '+entries.length+' movimientos.';}catch(e){document.getElementById('betaStatus').textContent='Error al exportar: '+e.message}});})();
+</script>
 </body></html>
