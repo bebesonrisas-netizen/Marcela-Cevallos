@@ -8,6 +8,8 @@ const PRICE_LOOKUP = {
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'POST') return { statusCode: 405, body: 'Method Not Allowed' };
   try {
+    const auth = event.headers.authorization || event.headers.Authorization || '';
+    if (!/^Bearer\\s+\\S+$/i.test(auth)) return {statusCode:401,body:JSON.stringify({error:'Autenticación requerida'})};
     const user = context.clientContext && context.clientContext.user;
     if (!user || !user.sub || !user.email) return { statusCode: 401, body: JSON.stringify({error:'Inicia sesión para contratar Premium'}) };
     const { plan } = JSON.parse(event.body || '{}');
