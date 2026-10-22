@@ -25,10 +25,13 @@ exports.handler = async (event, context) => {
     const price = PRICE_LOOKUP[plan];
     if (!price) return { statusCode: 400, body: JSON.stringify({ error: 'Plan no válido' }) };
     const origin = PUBLIC_ORIGIN;
+    const existing = await stripe.customers.search({query:"metadata['finova_user_id']:'"+user.sub.replace(/[^a-zA-Z0-9_-]/g,'')+"'",limit:2});
+    let customer = existing.data.find(c=>c.metadata && c.metadata.finova_user_id===user.sub);
+    if (!customer) customer = await stripe.customers.create({email:user.email,metadata:{app:'finova',finova_user_id:user.sub}});
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       line_items: [{ price, quantity: 1 }],
-      customer_email: user.email,
+      customer: customer.id,
       client_reference_id: user.sub,
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
