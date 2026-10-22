@@ -305,7 +305,7 @@ const T={es:['Controla, paga y ahorra con claridad.'],en:['Track, pay and save w
 async function startStripeCheckout(plan){
   try{
     const user = netlifyIdentity.currentUser();
-    if (!user) { openAuth('login'); throw new Error('Inicia sesión antes de contratar un plan.'); }
+    if (!user) { openAuth('login'); return; }
     const token = await user.jwt();
     const res=await fetch('/.netlify/functions/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({plan})});const out=await res.json();    if(!res.ok||!out.url)throw new Error(out.error||'No se pudo iniciar Stripe Checkout');
     window.location.href=out.url;
