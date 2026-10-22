@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY || 'sk_test_unconfigured');
 const reply = (statusCode, value) => ({statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify(value)});
 exports.handler = async (event, context) => {
   if (event.httpMethod !== 'GET') return reply(405,{error:'Method Not Allowed'});
