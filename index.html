@@ -223,8 +223,9 @@ async function saveDocument(){const original=docFile.files[0];if(!original||!doc
 async function finovaReadReceipt(){
  const input=document.getElementById('docFile'),f=input.files&&input.files[0],status=document.getElementById('finovaOCRStatus'),review=document.getElementById('finovaOCRReview');
  review.classList.add('hidden');
- if(!f||!f.type.startsWith('image/')){status.textContent='Selecciona primero una imagen JPG, PNG o similar. Los PDF todavía no son compatibles con este reconocimiento.';return}
- if(f.size>8*1024*1024){status.textContent='La foto es grande. Intentando reducirla antes de leerla…'}
+ if(!f||!['image/jpeg','image/png','image/webp'].includes(f.type)){status.textContent='Selecciona una imagen JPG, PNG o WebP. Los PDF todavía no son compatibles con este reconocimiento.';return}
+ if(f.size>15*1024*1024){status.textContent='La imagen supera el límite de 15 MB. Reduce su tamaño antes de leerla.';return}
+ if(f.size>3*1024*1024&&typeof createImageBitmap!=='function'){status.textContent='Este navegador no puede reducir imágenes grandes. Selecciona una imagen de menos de 3 MB.';return}
  status.textContent='Reconociendo texto de la imagen en tu navegador…';
  try{
   if(!window.Tesseract){
