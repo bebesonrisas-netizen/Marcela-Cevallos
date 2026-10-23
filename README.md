@@ -6,6 +6,8 @@ Finance organiser for Personal and Business. Financial records and documents rem
 
 Run `npm ci && npm test`. Tests cover backup v1/v2 restore, rollback, seven UI languages, multilingual transaction parsing, receipt number/date parsing, camera permission/track lifecycle, speech callbacks, OCR review/worker cleanup, and subscription security/lifecycle.
 
+A separate Tesseract.js 5.1.1 engine check recognised a synthetic receipt (24.20 EUR, 2026-10-23) correctly. This engine check ran in Node; hosted browser worker downloads and physical devices still need user-device verification.
+
 Camera, speech and OCR adapter tests simulate device/engine callbacks. They do not certify physical camera/microphone access, live speech recognition, external OCR worker downloads, or payment completion in a hosted Checkout.
 
 ## Test billing only

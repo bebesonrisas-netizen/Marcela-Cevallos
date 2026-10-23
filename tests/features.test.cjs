@@ -24,7 +24,7 @@ test('all seven languages translate navigation and placeholders without changing
  }finally{dom.window.close()}
 });
 test('assistant prepares and confirms a movement once and displays saved amount',async()=>{
- const dom=app(),w=dom.window;try{w.document.getElementById('lang').value='sv';w.setLang();w.document.getElementById('finovaAsk').value='Jag betalade 35,50 euro igår';w.finovaAnswer();assert.equal(w.document.getElementById('finovaMoveAmount').value,'35.5');assert.equal(w.localStorage.getItem('mi_finanzas_v1'),null);w.finovaSaveMove();assert.equal(JSON.parse(w.localStorage.getItem('mi_finanzas_v1')).moves[0].amount,35.5);assert.ok(w.document.getElementById('finovaMoveReview').classList.contains('hidden'));await tick()}finally{dom.window.close()}
+ const dom=app(),w=dom.window;try{w.document.getElementById('lang').value='sv';w.setLang();w.document.getElementById('finovaAsk').value='Jag betalade 35,50 euro igår';w.finovaAnswer();assert.equal(w.document.getElementById('finovaMoveAmount').value,'35.5');assert.equal(w.localStorage.getItem('mi_finanzas_v1'),null);w.finovaSaveMove();assert.equal(JSON.parse(w.localStorage.getItem('mi_finanzas_v1')).moves[0].amount,35.5);w.finovaSaveMove();assert.equal(JSON.parse(w.localStorage.getItem('mi_finanzas_v1')).moves.length,1);assert.ok(w.document.getElementById('finovaMoveReview').classList.contains('hidden'));await tick()}finally{dom.window.close()}
 });
 test('voice unsupported, permission error and transcript all have controlled outcomes',()=>{
  const dom=app(),w=dom.window;try{w.finovaStartVoice();assert.match(w.document.getElementById('finovaAnswerBox').textContent,/no admite/);
@@ -43,5 +43,11 @@ test('OCR adapter uses selected language, terminates worker and requires explici
 });
 test('billing remains closed when configuration is disabled, even with local spoofed plan',async()=>{
  const dom=app(),w=dom.window;try{w.localStorage.setItem('finova_checkout_success','true');await w.showPlans();assert.equal(w.document.getElementById('finovaTestPlans').hidden,true);assert.match(w.document.getElementById('finovaBillingStatus').textContent,/configuración en Netlify/)}finally{dom.window.close()}
+});
+test('monthly totals exclude earlier months and unsafe descriptions render as text',()=>{
+ const dom=app(),w=dom.window;try{const now=new Date(),today=now.toISOString().slice(0,10),previous=new Date(now.getFullYear(),now.getMonth()-1,15).toISOString().slice(0,10);
+ function add(date,amount){w.document.getElementById('desc').value='<img src=x onerror=alert(1)>';w.document.getElementById('amount').value=amount;w.document.getElementById('date').value=date;w.document.getElementById('type').value='income';w.addMove()}
+ add(previous,50);add(today,100);assert.match(w.document.getElementById('income').textContent,/100/);assert.equal(w.document.getElementById('moves').querySelector('img'),null);assert.equal(JSON.parse(w.localStorage.getItem('mi_finanzas_v1')).moves.length,2)
+ }finally{dom.window.close()}
 });
 module.exports={app};
