@@ -10,3 +10,16 @@
   for = "/"
   [headers.values]
     Cache-Control = "no-cache, must-revalidate"
+
+[build.environment]
+  FINOVA_BILLING_MODE = "test"
+  STRIPE_PORTAL_CONFIGURATION = "bpc_1UTp1i0WT1XqdqLbOgaNDm1w"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
