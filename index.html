@@ -298,7 +298,43 @@ const finovaBizKey='finova_business_v1';let finovaBiz=JSON.parse(localStorage.ge
 
 function showBackupPanel(){document.querySelectorAll('main>section').forEach(x=>x.classList.add('hidden'));document.getElementById('backup').classList.remove('hidden');document.getElementById('backup').scrollIntoView({block:'start',behavior:'smooth'})}
 function exportFinovaBackup(){try{const blob=new Blob([JSON.stringify({format:'finova-backup-v1',exportedAt:new Date().toISOString(),data},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='finova-copia-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);document.getElementById('backupStatus').textContent='Copia descargada. Consérvala de forma privada.'}catch(e){alert('No se pudo exportar la copia: '+e.message)}}
-async function restoreFinovaBackup(){const f=document.getElementById('restoreFinovaFile').files[0];if(!f){alert('Selecciona un archivo de copia JSON.');return}try{const raw=JSON.parse(await f.text());if(raw.format!=='finova-backup-v1'||!raw.data||!Array.isArray(raw.data.moves)||!Array.isArray(raw.data.loans)||!Array.isArray(raw.data.bills)||!Array.isArray(raw.data.documents)||!raw.data.cfg||typeof raw.data.cfg!=='object')throw Error('Formato de copia no válido');if(!confirm('Esto reemplazará todos los datos locales actuales. ¿Continuar?'))return;const restored=raw.data;localStorage.setItem(key,JSON.stringify(restored));data=restored;render();document.getElementById('backupStatus').textContent='Copia restaurada correctamente.'}catch(e){alert('No se pudo restaurar: '+e.message)}}
+function finovaValidateBackup(raw){
+ const combined=raw&&raw.format==='finova-backup-v2';
+ if(!raw||(!combined&&raw.format!=='finova-backup-v1'))throw Error('Formato de copia no válido');
+ const personal=combined?raw.personal:raw.data,business=combined?raw.business:null;
+ const object=x=>x&&typeof x==='object'&&!Array.isArray(x);
+ const number=x=>typeof x==='number'&&Number.isFinite(x)&&x>=0;
+ const text=x=>typeof x==='string';
+ const move=x=>object(x)&&['income','expense'].includes(x.type)&&number(x.amount)&&text(x.desc)&&text(x.date);
+ if(!object(personal)||!['moves','loans','bills','documents'].every(k=>Array.isArray(personal[k]))||!object(personal.cfg)||!text(personal.cfg.currency)||
+ !personal.moves.every(move)||!personal.loans.every(x=>object(x)&&text(x.name)&&number(x.total)&&number(x.paid)&&number(x.pay))||
+ !personal.bills.every(x=>object(x)&&text(x.name)&&number(x.amt)&&text(x.due)&&text(x.status))||
+ !personal.documents.every(x=>object(x)&&text(x.name)&&text(x.date)&&text(x.data)&&/^data:(image\/(png|jpeg|jpg|webp|gif)|application\/pdf);base64,/i.test(x.data)))throw Error('La copia contiene datos no válidos');
+ if(combined&&(!object(business)||!Array.isArray(business.moves)||!business.moves.every(move)))throw Error('Los datos de Negocios no son válidos');
+ return {personal,business,combined};
+}
+async function restoreFinovaBackup(){
+ const f=document.getElementById('restoreFinovaFile').files[0];
+ if(!f){alert('Selecciona un archivo de copia JSON.');return}
+ try{
+  const restored=finovaValidateBackup(JSON.parse(await f.text()));
+  if(!confirm(restored.combined?'Esto reemplazará los datos de Personal y Negocios en este navegador. ¿Continuar?':'Esto reemplazará los datos de Personal. Los de Negocios se conservarán. ¿Continuar?'))return;
+  const previousPersonal=localStorage.getItem(key),previousBusiness=localStorage.getItem(finovaBizKey);
+  try{
+   if(restored.combined)localStorage.setItem(finovaBizKey,JSON.stringify(restored.business));
+   localStorage.setItem(key,JSON.stringify(restored.personal));
+  }catch(error){
+   // Restore only keys that changed; preserve the original data on quota failures.
+   for(const [storageKey,previous] of [[key,previousPersonal],[finovaBizKey,previousBusiness]]){
+    if(localStorage.getItem(storageKey)!==previous){if(previous===null)localStorage.removeItem(storageKey);else localStorage.setItem(storageKey,previous)}
+   }
+   throw error;
+  }
+  data=restored.personal;if(restored.combined)finovaBiz=restored.business;
+  currency.value=data.cfg.currency;render();finovaRenderBusiness();
+  document.getElementById('backupStatus').textContent=restored.combined?'Copia de Personal y Negocios restaurada correctamente.':'Copia personal restaurada correctamente. Negocios se conserva.';
+ }catch(e){alert('No se pudo restaurar: '+e.message)}
+}
 function saveCfg(){data.cfg.currency=currency.value||'€';save()}function resetAll(){if(confirm('¿Borrar todos los datos?')){data={moves:[],loans:[],bills:[],documents:[],cfg:{currency:'€'}};save()}}function setupQR(){let u=location.href,src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&margin=8&data='+encodeURIComponent(u);qrBox.innerHTML='<img src="'+src+'" alt="Código QR de Finova" width="180" height="180" style="display:block">'}function copyAppLink(){navigator.clipboard?.writeText(location.href).then(()=>alert('Enlace de Finova copiado.')).catch(()=>alert('Copia este enlace: '+location.href))}
 function exportWord(){let text='MI FINANZAS\n\nINGRESOS: '+income.textContent+'\nGASTOS: '+expense.textContent+'\nDISPONIBLE: '+available.textContent+'\n\nMOVIMIENTOS\n'+data.moves.map(x=>x.date+' | '+x.desc+' | '+money(x.amount)+' | '+x.pay).join('\n');let blob=new Blob(['<html><body><pre>'+text.replace(/</g,'&lt;')+'</pre></body></html>'],{type:'application/msword'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mi-finanzas.doc';a.click()}
 const T={es:['Controla, paga y ahorra con claridad.'],en:['Track, pay and save with clarity.'],fr:['Suivez, payez et épargnez clairement.'],de:['Finanzen klar verfolgen, zahlen und sparen.'],it:['Controlla, paga e risparmia con chiarezza.'],pt:['Controle, pague e poupe com clareza.'],sv:['Följ, betala och spara med tydlighet.']};function setLang(){document.querySelector('[data-i="subtitle"]').textContent=T[lang.value][0]||T.es[0]}
