@@ -3,16 +3,21 @@ const Stripe=require('stripe');
 const {createHash,randomBytes}=require('node:crypto');
 const ORIGIN='https://storied-pika-1d2990.netlify.app';
 const ACCOUNT='acct_1UNYwq0WT1XqdqLb';
+// These are public sandbox settings, not credentials. Live mode is never supported.
+const TEST_PORTAL_CONFIGURATION='bpc_1UTp1i0WT1XqdqLbOgaNDm1w';
 const plans={premium_monthly:'finova_premium_monthly',premium_yearly:'finova_premium_yearly',pro_monthly:'finova_pro_monthly',pro_yearly:'finova_pro_yearly'};
 const events=['checkout.session.completed','checkout.session.async_payment_succeeded','checkout.session.async_payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted','invoice.paid','invoice.payment_failed'];
-function error(status,message){return Object.assign(new Error(message),{status})}
+function error(status,message,code){return Object.assign(new Error(message),{status,...(code?{code}:{})})}
 function response(statusCode,body){return {statusCode,headers:{'Content-Type':'application/json','Cache-Control':'no-store'},body:JSON.stringify(body)}}
 function client(){
  const secret=process.env.STRIPE_SECRET_KEY||'';
- if(process.env.FINOVA_BILLING_MODE!=='test'||!/^([sr]k)_test_/.test(secret)||!process.env.STRIPE_WEBHOOK_SECRET)throw error(503,'La facturación de prueba todavía no está configurada.');
+ const mode=process.env.FINOVA_BILLING_MODE??'test';
+ if(mode!=='test')throw error(503,'La facturación de prueba está desactivada.','disabled');
+ if(!/^([sr]k)_test_/.test(secret))throw error(503,'Se necesita una clave de Stripe de pruebas.','test_key_required');
+ if(!process.env.STRIPE_WEBHOOK_SECRET)throw error(503,'Falta configurar la firma del webhook de pruebas.','webhook_secret_required');
  return new Stripe(secret,{apiVersion:'2026-08-26.dahlia',maxNetworkRetries:2});
 }
-async function verifyAccount(stripe){const account=await stripe.accounts.retrieve();if(account.id!==ACCOUNT)throw error(503,'Configura las claves del entorno de prueba de Finova.');return account}
+async function verifyAccount(stripe){const account=await stripe.accounts.retrieve();if(account.id!==ACCOUNT)throw error(503,'Configura las claves del entorno de prueba de Finova.','sandbox_mismatch');return account}
 async function user(event){
  const token=event.headers?.authorization||event.headers?.Authorization||'';
  if(!/^Bearer [\w.-]+$/.test(token))throw error(401,'Inicia sesión para gestionar tu suscripción.');
@@ -41,4 +46,4 @@ async function entitlement(stripe,customer){
 async function syncCustomer(stripe,id){const state=await entitlement(stripe,id);await stripe.customers.update(id,{metadata:{finova_plan:state.plan,finova_status:state.status}});return state}
 async function run(event,method,fn){try{if(event.httpMethod!==method)return response(405,{error:'Método no permitido.'});sameOrigin(event);return await fn()}catch(e){return response(e.status||500,{error:e.status?e.message:'No se pudo completar la operación. Inténtalo de nuevo.'})}}
 function identifier(){return 'finova_test_'+Array.from(randomBytes(8),b=>String.fromCharCode(97+b%26)).join('')}
-module.exports={ORIGIN,ACCOUNT,plans,events,error,response,client,verifyAccount,user,customerFor,entitlement,syncCustomer,run,identifier};
+module.exports={ORIGIN,ACCOUNT,TEST_PORTAL_CONFIGURATION,plans,events,error,response,client,verifyAccount,user,customerFor,entitlement,syncCustomer,run,identifier};

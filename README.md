@@ -14,7 +14,7 @@ Camera, speech and OCR adapter tests simulate device/engine callbacks. They do n
 
 The code refuses live Stripe keys, events and subscriptions, and validates the account ID against the existing Finova sandbox (`acct_1UNYwq0WT1XqdqLb`). No production billing mode is implemented.
 
-`netlify.toml` supplies non-secret test configuration. Netlify must separately contain sandbox credentials, available to Functions:
+The Functions code supplies the public test-mode and portal defaults directly, so no additional hosting variables are needed for them. An explicit `FINOVA_BILLING_MODE=disabled` remains a kill switch. `netlify.toml` also records these non-secret settings. Netlify must separately contain sandbox credentials, available to Functions:
 
 - `STRIPE_SECRET_KEY`: a sandbox restricted key (`rk_test_…`) or existing test key for that account; needs account read, customers read/write/search, prices read, subscriptions read, Checkout read/write, and Customer Portal write.
 - `STRIPE_WEBHOOK_SECRET`: signing secret for the existing sandbox endpoint `we_1UNbpK0WT1XqdqLbXOtL8Oph`. Never place secrets in Git.
