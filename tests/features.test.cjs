@@ -51,3 +51,16 @@ test('monthly totals exclude earlier months and unsafe descriptions render as te
  }finally{dom.window.close()}
 });
 module.exports={app};
+test('subscription check reports progress, ignores duplicate clicks and restores controls after a stalled request',async()=>{
+ const dom=app(),w=dom.window;try{
+ w.fetch=async()=>({ok:true,json:async()=>({enabled:true,mode:'test'})});await w.showPlans();
+ w.netlifyIdentity.currentUser=()=>({jwt:async()=> 'test-token'});
+ let calls=0;w.fetch=()=>{calls++;return new Promise(()=>{})};
+ const originalTimeout=w.setTimeout.bind(w);w.setTimeout=(fn,ms,...args)=>originalTimeout(fn,ms===15000?20:ms,...args);
+ const first=w.finovaRefreshSubscription();assert.match(w.document.getElementById('finovaBillingStatus').textContent,/Verificando/);
+ assert.equal(w.document.querySelector('#finovaTestPlans button').disabled,true);
+ assert.equal(await w.finovaRefreshSubscription(),null);await first;
+ assert.equal(calls,1);assert.match(w.document.getElementById('finovaBillingStatus').textContent,/No se pudo/);
+ assert.equal(w.document.querySelector('#finovaTestPlans button').disabled,false);
+ }finally{dom.window.close()}
+});
