@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /index-3.html
+Disallow: /.netlify/
+Sitemap: https://storied-pika-1d2990.netlify.app/sitemap.xml

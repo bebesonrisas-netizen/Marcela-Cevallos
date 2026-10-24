@@ -3,7 +3,7 @@ exports.handler=async event=>{
  if(event.httpMethod!=='POST')return b.response(405,{error:'Método no permitido.'});
  let stripe,evt;
  try{stripe=b.client();const raw=event.isBase64Encoded?Buffer.from(event.body||'','base64'):event.body;evt=stripe.webhooks.constructEvent(raw,event.headers?.['stripe-signature']||event.headers?.['Stripe-Signature'],process.env.STRIPE_WEBHOOK_SECRET)}catch{return b.response(400,{error:'Webhook no válido o no configurado.'})}
- if(evt.livemode)return b.response(400,{error:'Solo se admiten eventos de prueba.'});
+ if(evt.livemode!==b.isLive())return b.response(400,{error:'El evento no corresponde al entorno configurado.'});
  if(!b.events.includes(evt.type))return b.response(200,{received:true});
  try{
   await b.verifyAccount(stripe);const object=evt.data.object;

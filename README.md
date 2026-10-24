@@ -4,15 +4,15 @@ Finance organiser for Personal and Business. Financial records and documents rem
 
 ## Validation
 
-Run `npm ci && npm test`. Tests cover backup v1/v2 restore, rollback, seven UI languages, multilingual transaction parsing, receipt number/date parsing, camera permission/track lifecycle, speech callbacks, OCR review/worker cleanup, and subscription security/lifecycle.
+Run `npm ci && npm test`. Tests cover backup v1/v2 restore, rollback, seven UI languages, multilingual transaction parsing, receipt number/date parsing, camera permission/track lifecycle, speech callbacks, OCR review/worker cleanup, and subscription security/lifecycle, including explicit cancellation timestamps and isolation between test and live mode.
 
 A separate Tesseract.js 5.1.1 engine check recognised a synthetic receipt (24.20 EUR, 2026-10-23) correctly. This engine check ran in Node; hosted browser worker downloads and physical devices still need user-device verification.
 
 Camera, speech and OCR adapter tests simulate device/engine callbacks. They do not certify physical camera/microphone access, live speech recognition, external OCR worker downloads, or payment completion in a hosted Checkout.
 
-## Test billing only
+## Billing environments
 
-The code refuses live Stripe keys, events and subscriptions, and validates the account ID against the existing Finova sandbox (`acct_1UNYwq0WT1XqdqLb`). No production billing mode is implemented.
+The deployed default remains test mode in the existing Finova sandbox (`acct_1UNYwq0WT1XqdqLb`). Production mode is prepared but is not activated: it requires `FINOVA_BILLING_MODE=live`, a live restricted key, a live webhook signing secret and a live Customer Portal configuration. The expected live account is `acct_1UNYwe0G40NrtpeH`. Mode, key prefix, account, price, subscription and webhook event must agree. Test and live records are never interchangeable.
 
 The Functions code supplies the public test-mode and portal defaults directly, so no additional hosting variables are needed for them. An explicit `FINOVA_BILLING_MODE=disabled` remains a kill switch. `netlify.toml` also records these non-secret settings. Netlify must separately contain sandbox credentials, available to Functions:
 
@@ -31,3 +31,11 @@ Before selling paid subscriptions, decide and implement the actual paid feature 
 ## Media and language
 
 The app UI supports Spanish, English, French, German, Italian, Portuguese and Swedish. Saved descriptions and document names retain their original text. Informational articles remain Spanish. OCR runs in-browser using Tesseract.js 5.1.1 loaded on demand; users must review extracted fields and confirm before saving. PDF storage is supported; PDF OCR is not. The browser's speech service may process audio externally; the app displays this before dictation.
+
+## Advertising and launch prerequisites
+
+Editorial guides are linked from the application and listed in sitemap.xml. AdSense account verification metadata and ads.txt use the existing publisher ID. Financial screens, sign-in, contact and privacy pages contain no ad loader. assets/finova-ads.js is disabled by default and is loaded only by the two detailed editorial articles. Before enabling it, confirm AdSense approval, publish a Google-certified CMP and configure an actual ad slot. The loader requires explicit CMP consent before any advertising request. A custom notice is not a certified CMP. No ad impressions or revenue are claimed.
+
+Before collecting real subscriptions, publish the operator's confirmed business/legal details and complete privacy and subscription terms, specify and implement the actual paid benefits, configure the live product prices and portal, and install the live key and webhook secret in hosting. Stripe currently reports charges and payouts enabled; this does not configure these application prerequisites. Never copy test prices, portal IDs or webhook secrets into live configuration. Automatic tax remains off; no tax registration is inferred.
+
+Confirmed sandbox QA on 24 October 2026: a synthetic paid subscription activated Premium through the deployed webhook; cancellation returned it to free/inactive. A separate user-completed hosted checkout and portal cancellation produced an active sandbox subscription with cancel_at equal to its period end. Subscription status now reports cancellation_scheduled and cancel_at even when Stripe's cancel_at_period_end boolean is false.

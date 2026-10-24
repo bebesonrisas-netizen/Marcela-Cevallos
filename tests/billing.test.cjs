@@ -28,3 +28,18 @@ test('public test defaults work without extra hosting variables while live keys 
 test('public configuration exposes a reason code without exposing any secret',async()=>{
  const previous={...process.env};try{delete process.env.FINOVA_BILLING_MODE;delete process.env.STRIPE_SECRET_KEY;const r=await require('../netlify/functions/billing-config').handler({httpMethod:'GET',headers:{}});assert.deepEqual(JSON.parse(r.body),{enabled:false,mode:'disabled',reason:'test_key_required'});assert.equal(r.body.includes('sk_'),false)}finally{process.env=previous}
 });
+test('explicit cancellation date is reported even when Stripe period-end flag is false',async()=>{
+ const f=fake();f.stripe.subscriptions.list=async()=>({data:[subscription({cancel_at:1800000000,cancel_at_period_end:false})],has_more:false});
+ const state=await b.entitlement(f.stripe,'cus_owned');assert.equal(state.plan,'premium');assert.equal(state.cancellation_scheduled,true);assert.equal(state.cancel_at,1800000000);
+});
+test('live mode requires matching credentials and a separate portal, and excludes test entitlements',async()=>{
+ const previous={...process.env};try{
+ process.env.FINOVA_BILLING_MODE='live';process.env.STRIPE_SECRET_KEY='sk_test_placeholder';process.env.STRIPE_WEBHOOK_SECRET='whsec_live_placeholder';
+ assert.throws(()=>b.client(),/producción/);process.env.STRIPE_SECRET_KEY='sk_live_placeholder';process.env.STRIPE_PORTAL_CONFIGURATION=b.TEST_PORTAL_CONFIGURATION;
+ assert.throws(()=>b.client(),/portal de producción/);process.env.STRIPE_PORTAL_CONFIGURATION='bpc_live_separate';assert.ok(b.client());
+ const f=fake();f.stripe.subscriptions.list=async()=>({data:[subscription()],has_more:false});assert.equal((await b.entitlement(f.stripe,'cus_owned')).plan,'free');
+ f.stripe.subscriptions.list=async()=>({data:[subscription({livemode:true})],has_more:false});const state=await b.entitlement(f.stripe,'cus_owned');assert.equal(state.plan,'premium');assert.equal(state.test,false);
+ f.stripe.accounts.retrieve=async()=>({id:b.ACCOUNT,charges_enabled:true});await assert.rejects(()=>b.verifyAccount(f.stripe),/claves/);
+ f.stripe.accounts.retrieve=async()=>({id:b.LIVE_ACCOUNT,charges_enabled:false});await assert.rejects(()=>b.verifyAccount(f.stripe),/cobros reales/);
+ }finally{process.env=previous}
+});
