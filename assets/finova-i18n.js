@@ -2,8 +2,8 @@
 // Every row: Spanish | English | French | German | Italian | Portuguese | Swedish.
 const rows=`Tu dinero, más claro.|Your money, clearer.|Votre argent, plus clair.|Dein Geld, klarer.|I tuoi soldi, più chiari.|Seu dinheiro, mais claro.|Dina pengar, tydligare.
 Finanzas personales, claras y bajo control.|Personal finances, clear and under control.|Vos finances, claires et maîtrisées.|Persönliche Finanzen, klar im Griff.|Finanze personali chiare e sotto controllo.|Finanças pessoais claras e sob controle.|Privatekonomi, tydlig och under kontroll.
-ABRIR FINOVA IA|OPEN FINOVA AI|OUVRIR FINOVA IA|FINOVA KI ÖFFNEN|APRI FINOVA IA|ABRIR FINOVA IA|ÖPPNA FINOVA AI
-Modalidad de Finova|Finova mode|Mode Finova|Finova-Modus|Modalità Finova|Modo Finova|Finova-läge
+ABRIR m.cfinova IA|OPEN m.cfinova AI|OUVRIR m.cfinova IA|m.cfinova KI ÖFFNEN|APRI m.cfinova IA|ABRIR m.cfinova IA|ÖPPNA m.cfinova AI
+Modalidad de m.cfinova|m.cfinova mode|Mode m.cfinova|m.cfinova-Modus|Modalità m.cfinova|Modo m.cfinova|m.cfinova-läge
 Personal|Personal|Personnel|Privat|Personale|Pessoal|Privat
 Negocios|Business|Professionnel|Geschäftlich|Attività|Negócios|Företag
 Dos espacios separados en este navegador|Two separate spaces in this browser|Deux espaces séparés dans ce navigateur|Zwei getrennte Bereiche in diesem Browser|Due spazi separati in questo browser|Dois espaços separados neste navegador|Två separata utrymmen i den här webbläsaren
@@ -15,11 +15,11 @@ Facturas|Bills|Factures|Rechnungen|Fatture|Faturas|Fakturor
 Documentos|Documents|Documents|Dokumente|Documenti|Documentos|Dokument
 Ahorros|Savings|Épargne|Sparen|Risparmi|Poupança|Sparande
 Configuración|Settings|Paramètres|Einstellungen|Impostazioni|Configurações|Inställningar
-Abrir mi agente Finova IA · Hablar o escribir|Open Finova AI · Speak or type|Ouvrir Finova IA · Parler ou écrire|Finova KI öffnen · Sprechen oder schreiben|Apri Finova IA · Parla o scrivi|Abrir Finova IA · Falar ou escrever|Öppna Finova AI · Tala eller skriv
+Abrir mi agente m.cfinova IA · Hablar o escribir|Open m.cfinova AI · Speak or type|Ouvrir m.cfinova IA · Parler ou écrire|m.cfinova KI öffnen · Sprechen oder schreiben|Apri m.cfinova IA · Parla o scrivi|Abrir m.cfinova IA · Falar ou escrever|Öppna m.cfinova AI · Tala eller skriv
 TU RESUMEN FINANCIERO|YOUR FINANCIAL OVERVIEW|VOTRE BILAN FINANCIER|DEIN FINANZÜBERBLICK|IL TUO RIEPILOGO FINANZIARIO|SEU RESUMO FINANCEIRO|DIN EKONOMISKA ÖVERSIKT
 ¡Hola! 👋|Hello! 👋|Bonjour ! 👋|Hallo! 👋|Ciao! 👋|Olá! 👋|Hej! 👋
 Aquí tienes un resumen de tus finanzas.|Here is an overview of your finances.|Voici un aperçu de vos finances.|Hier ist dein Finanzüberblick.|Ecco un riepilogo delle tue finanze.|Aqui está um resumo das suas finanças.|Här är en översikt över din ekonomi.
-Consultar Finova IA|Ask Finova AI|Consulter Finova IA|Finova KI fragen|Consulta Finova IA|Consultar Finova IA|Fråga Finova AI
+Consultar m.cfinova IA|Ask m.cfinova AI|Consulter m.cfinova IA|m.cfinova KI fragen|Consulta m.cfinova IA|Consultar m.cfinova IA|Fråga m.cfinova AI
 Ingresos del mes|Monthly income|Revenus du mois|Monatseinnahmen|Entrate del mese|Receitas do mês|Månadens inkomster
 Gastos|Expenses|Dépenses|Ausgaben|Spese|Despesas|Utgifter
 Disponible|Available|Disponible|Verfügbar|Disponibile|Disponível|Tillgängligt
@@ -44,14 +44,14 @@ Tu asistente financiero|Your financial assistant|Votre assistant financier|Dein 
 Crear un presupuesto|Create a budget|Créer un budget|Budget erstellen|Crea un budget|Criar um orçamento|Skapa en budget
 ¿Cuánto puedo ahorrar?|How much can I save?|Combien puis-je épargner ?|Wie viel kann ich sparen?|Quanto posso risparmiare?|Quanto posso poupar?|Hur mycket kan jag spara?
 Escribe tu pregunta →|Type your question →|Écrivez votre question →|Schreibe deine Frage →|Scrivi la tua domanda →|Escreva sua pergunta →|Skriv din fråga →
-FINOVA · FINANZAS INTELIGENTES|FINOVA · SMART FINANCES|FINOVA · FINANCES INTELLIGENTES|FINOVA · SMARTE FINANZEN|FINOVA · FINANZE INTELLIGENTI|FINOVA · FINANÇAS INTELIGENTES|FINOVA · SMART EKONOMI
-Organiza tus finanzas gratis con Finova. 💜|Organise your finances free with Finova. 💜|Organisez vos finances gratuitement avec Finova. 💜|Organisiere deine Finanzen kostenlos mit Finova. 💜|Organizza gratis le tue finanze con Finova. 💜|Organize suas finanças grátis com Finova. 💜|Ordna din ekonomi gratis med Finova. 💜
+m.cfinova · FINANZAS INTELIGENTES|m.cfinova · SMART FINANCES|m.cfinova · FINANCES INTELLIGENTES|m.cfinova · SMARTE FINANZEN|m.cfinova · FINANZE INTELLIGENTI|m.cfinova · FINANÇAS INTELIGENTES|m.cfinova · SMART EKONOMI
+Organiza tus finanzas gratis con m.cfinova. 💜|Organise your finances free with m.cfinova. 💜|Organisez vos finances gratuitement avec m.cfinova. 💜|Organisiere deine Finanzen kostenlos mit m.cfinova. 💜|Organizza gratis le tue finanze con m.cfinova. 💜|Organize suas finanças grátis com m.cfinova. 💜|Ordna din ekonomi gratis med m.cfinova. 💜
 Controla tus ingresos, gastos, préstamos, facturas, documentos y objetivos de ahorro desde un solo lugar.|Track income, expenses, loans, bills, documents and savings goals in one place.|Suivez revenus, dépenses, prêts, factures, documents et objectifs d’épargne au même endroit.|Verwalte Einnahmen, Ausgaben, Kredite, Rechnungen, Dokumente und Sparziele an einem Ort.|Gestisci entrate, spese, prestiti, fatture, documenti e obiettivi di risparmio in un unico posto.|Controle receitas, despesas, empréstimos, faturas, documentos e metas de poupança em um só lugar.|Hantera inkomster, utgifter, lån, fakturor, dokument och sparmål på ett ställe.
 Crear cuenta gratis|Create a free account|Créer un compte gratuit|Kostenloses Konto erstellen|Crea un account gratuito|Criar conta grátis|Skapa ett gratis konto
 Iniciar sesión|Sign in|Se connecter|Anmelden|Accedi|Entrar|Logga in
 Ver Premium|View Premium|Voir Premium|Premium ansehen|Vedi Premium|Ver Premium|Visa Premium
-Comparte Finova|Share Finova|Partager Finova|Finova teilen|Condividi Finova|Compartilhar Finova|Dela Finova
-Escanea para abrir Finova|Scan to open Finova|Scannez pour ouvrir Finova|Scannen, um Finova zu öffnen|Scansiona per aprire Finova|Digitalize para abrir Finova|Skanna för att öppna Finova
+Comparte m.cfinova|Share m.cfinova|Partager m.cfinova|m.cfinova teilen|Condividi m.cfinova|Compartilhar m.cfinova|Dela m.cfinova
+Escanea para abrir m.cfinova|Scan to open m.cfinova|Scannez pour ouvrir m.cfinova|Scannen, um m.cfinova zu öffnen|Scansiona per aprire m.cfinova|Digitalize para abrir m.cfinova|Skanna för att öppna m.cfinova
 Escanea tus tickets|Scan your receipts|Scannez vos reçus|Belege scannen|Scansiona i tuoi scontrini|Digitalize seus recibos|Skanna dina kvitton
 Haz una foto o sube una factura y guarda tus documentos.|Take a photo or upload a bill and save your documents.|Prenez une photo ou importez une facture et conservez vos documents.|Fotografiere oder lade eine Rechnung hoch und speichere deine Dokumente.|Scatta una foto o carica una fattura e salva i tuoi documenti.|Tire uma foto ou envie uma fatura e salve seus documentos.|Ta en bild eller ladda upp en faktura och spara dina dokument.
 Abrir cámara|Open camera|Ouvrir la caméra|Kamera öffnen|Apri fotocamera|Abrir câmera|Öppna kameran
@@ -65,7 +65,7 @@ Deudas / préstamos|Debts / loans|Dettes / prêts|Schulden / Kredite|Debiti / pr
 Ahorro|Savings|Épargne|Ersparnisse|Risparmio|Poupança|Sparande
 Regla sugerida: reserva primero tu ahorro, cubre facturas y deudas y después usa el dinero restante para gastos variables.|Suggested rule: set aside savings, cover bills and debts, then use the rest for variable expenses.|Suggestion : épargnez, couvrez factures et dettes, puis utilisez le reste pour les dépenses variables.|Vorschlag: zuerst sparen, Rechnungen und Schulden decken, dann variable Ausgaben planen.|Suggerimento: accantona i risparmi, copri fatture e debiti, poi le spese variabili.|Sugestão: reserve a poupança, cubra faturas e dívidas e use o restante para despesas variáveis.|Förslag: avsätt sparande, täck räkningar och skulder och använd resten till rörliga utgifter.
 Próximos pagos|Upcoming payments|Prochains paiements|Anstehende Zahlungen|Prossimi pagamenti|Próximos pagamentos|Kommande betalningar
-FINOVA NEGOCIOS|FINOVA BUSINESS|FINOVA PRO|FINOVA GESCHÄFTLICH|FINOVA ATTIVITÀ|FINOVA NEGÓCIOS|FINOVA FÖRETAG
+m.cfinova NEGOCIOS|m.cfinova BUSINESS|m.cfinova PRO|m.cfinova GESCHÄFTLICH|m.cfinova ATTIVITÀ|m.cfinova NEGÓCIOS|m.cfinova FÖRETAG
 Tu negocio, bajo control 🏪|Your business, under control 🏪|Votre activité, sous contrôle 🏪|Dein Geschäft im Griff 🏪|La tua attività, sotto controllo 🏪|Seu negócio sob controle 🏪|Ditt företag, under kontroll 🏪
 Registra ventas, compras y gastos de tu comercio sin mezclar los movimientos personales.|Record sales, purchases and business expenses separately from personal transactions.|Enregistrez ventes, achats et frais séparément de vos opérations personnelles.|Erfasse Verkäufe, Einkäufe und Geschäftsausgaben getrennt von privaten Buchungen.|Registra vendite, acquisti e spese aziendali separatamente dai movimenti personali.|Registre vendas, compras e despesas do negócio separadamente dos movimentos pessoais.|Registrera försäljning, inköp och företagsutgifter separat från privata transaktioner.
 Registrar venta|Record sale|Enregistrer une vente|Verkauf erfassen|Registra vendita|Registrar venda|Registrera försäljning
@@ -108,7 +108,7 @@ Categoría|Category|Catégorie|Kategorie|Categoria|Categoria|Kategori
 Método|Method|Moyen|Methode|Metodo|Método|Metod
 Importe|Amount|Montant|Betrag|Importo|Valor|Belopp
 Añadir préstamo|Add loan|Ajouter un prêt|Kredit hinzufügen|Aggiungi prestito|Adicionar empréstimo|Lägg till lån
-Avisos locales: verás las facturas próximas a vencer cuando abras Finova. Todavía no se envían notificaciones fuera de la aplicación.|Local reminders: upcoming bills appear when you open Finova. No notifications are sent outside the app.|Rappels locaux : les échéances apparaissent à l’ouverture de Finova. Aucune notification hors de l’application.|Lokale Hinweise: Fällige Rechnungen erscheinen beim Öffnen von Finova. Keine Benachrichtigungen außerhalb der App.|Promemoria locali: le fatture in scadenza appaiono aprendo Finova. Nessuna notifica fuori dall’app.|Avisos locais: faturas a vencer aparecem ao abrir Finova. Sem notificações fora do aplicativo.|Lokala påminnelser: kommande fakturor visas när du öppnar Finova. Inga aviseringar skickas utanför appen.
+Avisos locales: verás las facturas próximas a vencer cuando abras m.cfinova. Todavía no se envían notificaciones fuera de la aplicación.|Local reminders: upcoming bills appear when you open m.cfinova. No notifications are sent outside the app.|Rappels locaux : les échéances apparaissent à l’ouverture de m.cfinova. Aucune notification hors de l’application.|Lokale Hinweise: Fällige Rechnungen erscheinen beim Öffnen von m.cfinova. Keine Benachrichtigungen außerhalb der App.|Promemoria locali: le fatture in scadenza appaiono aprendo m.cfinova. Nessuna notifica fuori dall’app.|Avisos locais: faturas a vencer aparecem ao abrir m.cfinova. Sem notificações fora do aplicativo.|Lokala påminnelser: kommande fakturor visas när du öppnar m.cfinova. Inga aviseringar skickas utanför appen.
 Pendiente|Pending|En attente|Offen|In sospeso|Pendente|Obetald
 Pagada|Paid|Payée|Bezahlt|Pagata|Paga|Betald
 Añadir factura|Add bill|Ajouter une facture|Rechnung hinzufügen|Aggiungi fattura|Adicionar fatura|Lägg till faktura
@@ -122,7 +122,7 @@ Ticket|Receipt|Reçu|Beleg|Scontrino|Recibo|Kvitto
 Pago|Payment|Paiement|Zahlung|Pagamento|Pagamento|Betalning
 Otro|Other|Autre|Sonstiges|Altro|Outro|Övrigt
 Guardar documento|Save document|Enregistrer le document|Dokument speichern|Salva documento|Salvar documento|Spara dokument
-Finova IA · Leer ticket o factura|Finova AI · Read receipt or bill|Finova IA · Lire reçu ou facture|Finova KI · Beleg oder Rechnung lesen|Finova IA · Leggi scontrino o fattura|Finova IA · Ler recibo ou fatura|Finova AI · Läs kvitto eller faktura
+m.cfinova IA · Leer ticket o factura|m.cfinova AI · Read receipt or bill|m.cfinova IA · Lire reçu ou facture|m.cfinova KI · Beleg oder Rechnung lesen|m.cfinova IA · Leggi scontrino o fattura|m.cfinova IA · Ler recibo ou fatura|m.cfinova AI · Läs kvitto eller faktura
 Selecciona una imagen para reconocer sus datos. Revisa el resultado antes de guardar.|Choose an image to read its data. Review the result before saving.|Choisissez une image. Vérifiez les données reconnues avant de les enregistrer.|Wähle ein Bild. Prüfe die erkannten Daten vor dem Speichern.|Scegli un’immagine. Controlla i dati riconosciuti prima di salvarli.|Escolha uma imagem. Revise os dados reconhecidos antes de salvar.|Välj en bild. Granska de tolkade uppgifterna innan du sparar.
 Revisar datos reconocidos|Review recognised data|Vérifier les données reconnues|Erkannte Daten prüfen|Controlla dati riconosciuti|Revisar dados reconhecidos|Granska tolkade uppgifter
 Confirmar y registrar gasto|Confirm and record expense|Confirmer et enregistrer la dépense|Bestätigen und Ausgabe erfassen|Conferma e registra spesa|Confirmar e registrar despesa|Bekräfta och registrera utgift
@@ -134,7 +134,7 @@ Buscar y filtrar|Search and filter|Rechercher et filtrer|Suchen und filtern|Cerc
 Todos los tipos|All types|Tous les types|Alle Typen|Tutti i tipi|Todos os tipos|Alla typer
 Todos los pagos|All payment methods|Tous les paiements|Alle Zahlungsarten|Tutti i pagamenti|Todos os pagamentos|Alla betalningssätt
 Ordenar por fecha|Sort by date|Trier par date|Nach Datum sortieren|Ordina per data|Ordenar por data|Sortera efter datum
-Finova IA · Tu asistente financiero|Finova AI · Your financial assistant|Finova IA · Votre assistant financier|Finova KI · Dein Finanzassistent|Finova IA · Il tuo assistente finanziario|Finova IA · Seu assistente financeiro|Finova AI · Din ekonomiassistent
+m.cfinova IA · Tu asistente financiero|m.cfinova AI · Your financial assistant|m.cfinova IA · Votre assistant financier|m.cfinova KI · Dein Finanzassistent|m.cfinova IA · Il tuo assistente finanziario|m.cfinova IA · Seu assistente financeiro|m.cfinova AI · Din ekonomiassistent
 Escribe un movimiento o una consulta. El dictado puede enviar audio al servicio de reconocimiento de tu navegador. Revisa cada movimiento antes de guardarlo.|Type a transaction or question. Dictation may send audio to your browser’s speech service. Review each transaction before saving.|Saisissez une opération ou question. La dictée peut envoyer l’audio au service vocal du navigateur. Vérifiez avant d’enregistrer.|Schreibe eine Buchung oder Frage. Diktieren kann Audio an den Sprachdienst des Browsers senden. Prüfe vor dem Speichern.|Scrivi un movimento o una domanda. La dettatura può inviare audio al servizio vocale del browser. Controlla prima di salvare.|Digite um movimento ou pergunta. O ditado pode enviar áudio ao serviço de voz do navegador. Revise antes de salvar.|Skriv en transaktion eller fråga. Diktering kan skicka ljud till webbläsarens taltjänst. Granska innan du sparar.
 Resumen de gastos del mes|Monthly expense overview|Bilan des dépenses du mois|Monatliche Ausgabenübersicht|Riepilogo spese del mese|Resumo de despesas do mês|Månadens utgiftsöversikt
 Mis gastos del mes|My monthly expenses|Mes dépenses du mois|Meine Monatsausgaben|Le mie spese del mese|Minhas despesas do mês|Månadens utgifter
@@ -160,8 +160,8 @@ Puedes usar cualquier moneda y método de pago. Los datos se guardan en este nav
 Guardar moneda|Save currency|Enregistrer la devise|Währung speichern|Salva valuta|Salvar moeda|Spara valuta
 Borrar todos los datos|Delete all data|Effacer toutes les données|Alle Daten löschen|Elimina tutti i dati|Apagar todos os dados|Radera alla uppgifter
 Copiar enlace|Copy link|Copier le lien|Link kopieren|Copia link|Copiar link|Kopiera länk
-Finova · Tu dinero, más claro.|Finova · Your money, clearer.|Finova · Votre argent, plus clair.|Finova · Dein Geld, klarer.|Finova · I tuoi soldi, più chiari.|Finova · Seu dinheiro, mais claro.|Finova · Dina pengar, tydligare.
-Acerca de Finova|About Finova|À propos de Finova|Über Finova|Informazioni su Finova|Sobre Finova|Om Finova
+m.cfinova · Tu dinero, más claro.|m.cfinova · Your money, clearer.|m.cfinova · Votre argent, plus clair.|m.cfinova · Dein Geld, klarer.|m.cfinova · I tuoi soldi, più chiari.|m.cfinova · Seu dinheiro, mais claro.|m.cfinova · Dina pengar, tydligare.
+Acerca de m.cfinova|About m.cfinova|À propos de m.cfinova|Über m.cfinova|Informazioni su m.cfinova|Sobre m.cfinova|Om m.cfinova
 Guía de finanzas|Finance guide|Guide financier|Finanzratgeber|Guida finanziaria|Guia de finanças|Ekonomiguide
 Ayuda|Help|Aide|Hilfe|Aiuto|Ajuda|Hjälp
 Privacidad|Privacy|Confidentialité|Datenschutz|Privacy|Privacidade|Integritet
@@ -232,7 +232,7 @@ function apply(){if(busy||!document?.body)return;busy=true;observer?.disconnect(
   const map=attrs.get(el)||{};
   for(const attr of ['placeholder','aria-label','title']){if(!el.hasAttribute(attr))continue;const val=el.getAttribute(attr),old=map[attr],original=old&&old.last===val?old.original:val,out=translate(original);map[attr]={original,last:out};if(out!==val)el.setAttribute(attr,out)}attrs.set(el,map);
  }
- document.documentElement.lang=current;document.title='Finova · '+dict[current]['Tu dinero, más claro.'];
+ document.documentElement.lang=current;document.title='m.cfinova · '+dict[current]['Tu dinero, más claro.'];
  }finally{busy=false;observer?.observe(document.body,{childList:true,subtree:true,characterData:true})}
 }
 const observer=new MutationObserver(()=>apply());window.addEventListener('pagehide',()=>observer.disconnect());

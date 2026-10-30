@@ -1,6 +1,6 @@
 {
-  "name": "Finova",
-  "short_name": "Finova",
+  "name": "m.cfinova",
+  "short_name": "m.cfinova",
   "description": "Finanzas personales, claras y bajo control.",
   "start_url": "/",
   "display": "standalone",

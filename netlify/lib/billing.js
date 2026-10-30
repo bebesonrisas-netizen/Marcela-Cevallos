@@ -22,7 +22,7 @@ function client(){
  if(!process.env.STRIPE_WEBHOOK_SECRET)throw error(503,'Falta configurar la firma del webhook de pruebas.','webhook_secret_required');
  return new Stripe(secret,{apiVersion:'2026-08-26.dahlia',maxNetworkRetries:2});
 }
-async function verifyAccount(stripe){const account=await stripe.accounts.retrieve();if(isLive()&&!account.charges_enabled)throw error(503,'Los cobros reales no están disponibles.','live_charges_disabled');if(account.id!==(isLive()?LIVE_ACCOUNT:ACCOUNT))throw error(503,'Configura las claves del entorno de prueba de Finova.','sandbox_mismatch');return account}
+async function verifyAccount(stripe){const account=await stripe.accounts.retrieve();if(isLive()&&!account.charges_enabled)throw error(503,'Los cobros reales no están disponibles.','live_charges_disabled');if(account.id!==(isLive()?LIVE_ACCOUNT:ACCOUNT))throw error(503,'Configura las claves del entorno de prueba de m.cfinova.','sandbox_mismatch');return account}
 async function user(event){
  const token=event.headers?.authorization||event.headers?.Authorization||'';
  if(!/^Bearer [\w.-]+$/.test(token))throw error(401,'Inicia sesión para gestionar tu suscripción.');
