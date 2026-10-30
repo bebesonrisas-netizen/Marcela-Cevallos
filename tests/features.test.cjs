@@ -51,6 +51,14 @@ test('monthly totals exclude earlier months and unsafe descriptions render as te
  }finally{dom.window.close()}
 });
 module.exports={app};
+test('Premium report requires consent, sends aggregates only and escapes category content',async()=>{
+ const dom=app(),w=dom.window;try{
+  const period=w.document.getElementById('premiumMonth').value;w.document.getElementById('date').value=period+'-15';w.document.getElementById('desc').value='PRIVATE_DESCRIPTION';w.document.getElementById('amount').value='35.50';w.document.getElementById('type').value='expense';w.addMove();
+  const payload=w.finovaReportPayload('personal',period);assert.equal(payload.rows[0].cents,3550);assert.equal(JSON.stringify(payload).includes('PRIVATE_DESCRIPTION'),false);
+  let calls=0;w.netlifyIdentity.currentUser=()=>({jwt:async()=> 'verified.token'});w.fetch=async(url,options)=>{calls++;assert.equal(url,'/.netlify/functions/premium-report');assert.equal(options.headers.Authorization,'Bearer verified.token');return {ok:true,json:async()=>({kind:'personal',period,test:true,totals:{income:0,expense:3550,balance:-3550},prior:{income:0,expense:0,balance:0},categories:[{type:'expense',category:'<img src=x onerror=alert(1)>',cents:3550}]})}};
+  await w.document.getElementById('premiumGenerate').onclick();assert.equal(calls,0);w.document.getElementById('premiumConsent').checked=true;await w.document.getElementById('premiumGenerate').onclick();assert.equal(calls,1);assert.equal(w.document.getElementById('premiumReportOutput').querySelector('img'),null);assert.match(w.document.getElementById('premiumReportOutput').textContent,/TEST/);
+ }finally{w.close()}
+});
 test('subscription check reports progress, ignores duplicate clicks and restores controls after a stalled request',async()=>{
  const dom=app(),w=dom.window;try{
  w.fetch=async()=>({ok:true,json:async()=>({enabled:true,mode:'test'})});await w.showPlans();

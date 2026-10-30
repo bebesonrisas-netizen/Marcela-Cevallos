@@ -1,4 +1,4 @@
-# Finova
+# m.cfinova
 
 Finance organiser for Personal and Business. Financial records and documents remain in browser storage. Account sign-in does not synchronise these records.
 
@@ -24,9 +24,9 @@ Netlify Identity sessions are verified server-side against the canonical site's 
 
 The webhook verifies signatures over raw (including base64-decoded) request bodies, handles checkout completion/delayed payment results, subscription creation/update/deletion and invoice paid/failed events, and recomputes state from Stripe. Reordered/retried events do not overwrite state from stale event payloads. Unpaid invoices, past-due and cancelled subscriptions cannot grant access. End-of-period cancellations preserve access until Stripe changes the subscription's actual status. The Portal allows cancellation at period end and payment method updates; plan switching is disabled during testing.
 
-Before calling this integration complete, a confirmed test user must complete hosted Checkout and then cancel through the Portal. Verify signed webhook delivery and state changes in Finova, including a failed renewal. These require working deployment credentials and access to the test account. Return URLs and localStorage never activate Premium. Existing free tools remain available; no paid feature enforcement or production monetisation is claimed.
+Before calling this integration complete, a confirmed test user must complete hosted Checkout and then cancel through the Portal. Verify signed webhook delivery and state changes in Finova, including a failed renewal. These require working deployment credentials and access to the test account. Return URLs and localStorage never activate Premium. Existing free tools remain available. Premium personal monthly reports and Pro business reports are enforced by the server through subscription entitlement checks; production monetisation is not active.
 
-Before selling paid subscriptions, decide and implement the actual paid feature set, replace the metadata mapping with a durable application account mapping if needed for production, publish complete terms/privacy/operator details, and review applicable tax registrations. Automatic tax is not enabled.
+Before selling paid subscriptions, verify the report flow in hosted Checkout, replace the metadata mapping with a durable application account mapping if needed for production, publish complete terms/privacy/operator details, and review applicable tax registrations. Automatic tax is not enabled.
 
 ## Media and language
 
@@ -36,6 +36,17 @@ The app UI supports Spanish, English, French, German, Italian, Portuguese and Sw
 
 Editorial guides are linked from the application and listed in sitemap.xml. AdSense account verification metadata and ads.txt use the existing publisher ID. Financial screens, sign-in, contact and privacy pages contain no ad loader. assets/finova-ads.js is disabled by default and is loaded only by the two detailed editorial articles. Before enabling it, confirm AdSense approval, publish a Google-certified CMP and configure an actual ad slot. The loader requires explicit CMP consent before any advertising request. A custom notice is not a certified CMP. No ad impressions or revenue are claimed.
 
-Before collecting real subscriptions, publish the operator's confirmed business/legal details and complete privacy and subscription terms, specify and implement the actual paid benefits, configure the live product prices and portal, and install the live key and webhook secret in hosting. Stripe currently reports charges and payouts enabled; this does not configure these application prerequisites. Never copy test prices, portal IDs or webhook secrets into live configuration. Automatic tax remains off; no tax registration is inferred.
+Before collecting real subscriptions, publish the operator's confirmed business/legal details and complete privacy and subscription terms, validate the published paid report benefits, configure the live product prices and portal, and install the live key and webhook secret in hosting. Stripe currently reports charges and payouts enabled; this does not configure these application prerequisites. Never copy test prices, portal IDs or webhook secrets into live configuration. Automatic tax remains off; no tax registration is inferred.
 
 Confirmed sandbox QA on 24 October 2026: a synthetic paid subscription activated Premium through the deployed webhook; cancellation returned it to free/inactive. A separate user-completed hosted checkout and portal cancellation produced an active sandbox subscription with cancel_at equal to its period end. Subscription status now reports cancellation_scheduled and cancel_at even when Stripe's cancel_at_period_end boolean is false.
+
+
+## Release 30 October 2026
+
+Public branding is m.cfinova. Storage keys, origin, account mapping and billing lookup keys are intentionally unchanged.
+
+Premium adds personal monthly category reports, previous-month comparisons, CSV download and a printable report (browser Save PDF). Pro adds business monthly reports. Existing free tools remain available. Reports require a confirmed authenticated account and server-verified subscription on each request; browser flags cannot grant access. Only monthly category aggregates are sent, after explicit consent. The report endpoint does not persist the submitted aggregates. Financial records are still local, without cross-device sync.
+
+The web manifest includes app icons, an Apple touch icon and an optional install action. This is browser installation, not a native App Store / Google Play release; offline availability is not promised. Download a backup before changing browsing context.
+
+Live account audit on 30 October: charges and payouts enabled; zero matching live prices for the four existing lookup keys, and zero active live Customer Portal configurations. Live hosting credentials, operator postal contact, complete subscription/privacy terms, tax treatment and hosted end-to-end checks remain prerequisites. Do not claim the app is selling live subscriptions.
