@@ -11,6 +11,8 @@ exports.handler=event=>b.run(event,'POST',async()=>{
  const sessions=await stripe.checkout.sessions.list({customer:customer.id,status:'open',limit:100});
  if(sessions.has_more)throw b.error(409,'Cierra los pagos pendientes antes de continuar.');
  for(const s of sessions.data){if(s.metadata?.app==='finova'&&s.metadata.plan===body.plan&&s.url)return b.response(200,{url:s.url,test:!b.isLive()});if(s.metadata?.app==='finova')await stripe.checkout.sessions.expire(s.id)}
- const session=await stripe.checkout.sessions.create({mode:'subscription',customer:customer.id,client_reference_id:user.id,line_items:[{price:price.id,quantity:1}],metadata:{app:'finova',plan:body.plan},subscription_data:{metadata:{app:'finova'}},integration_identifier:b.identifier(),success_url:b.ORIGIN+'/?checkout=success',cancel_url:b.ORIGIN+'/?checkout=cancelled'},{idempotencyKey:'checkout-'+customer.id+'-'+body.plan+'-'+Math.floor(Date.now()/600000)});
+ // Subscription mode generates invoices automatically. Keep billing details on Stripe,
+ // never in the browser's financial records. Tax registration is configured separately.
+ const session=await stripe.checkout.sessions.create({mode:'subscription',customer:customer.id,billing_address_collection:'required',customer_update:{address:'auto',name:'auto'},tax_id_collection:{enabled:true},client_reference_id:user.id,line_items:[{price:price.id,quantity:1}],metadata:{app:'finova',plan:body.plan},subscription_data:{metadata:{app:'finova'}},integration_identifier:b.identifier(),success_url:b.ORIGIN+'/?checkout=success',cancel_url:b.ORIGIN+'/?checkout=cancelled'},{idempotencyKey:'checkout-'+customer.id+'-'+body.plan+'-'+Math.floor(Date.now()/600000)});
  return b.response(200,{url:session.url,test:!b.isLive()});
 });
