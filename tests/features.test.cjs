@@ -1,8 +1,8 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
 const {JSDOM}=require('jsdom'),tools=require('../assets/finova-tools');
-function app(){
+function app(identity){
  const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://storied-pika-1d2990.netlify.app/',runScripts:'outside-only',pretendToBeVisual:true});
- const w=dom.window;w.alert=()=>{};w.confirm=()=>true;w.HTMLElement.prototype.scrollIntoView=()=>{};w.URL.createObjectURL=()=> 'blob:backup';w.netlifyIdentity={on(){},currentUser(){return null}};
+ const w=dom.window;w.alert=()=>{};w.confirm=()=>true;w.HTMLElement.prototype.scrollIntoView=()=>{};w.URL.createObjectURL=()=> 'blob:backup';w.netlifyIdentity=identity||{on(){},currentUser(){return null}};
  w.fetch=async()=>({ok:true,json:async()=>({enabled:false,mode:'disabled'})});
  const scripts=[];for(const s of w.document.scripts){if(s.src&&s.src.includes('/assets/'))scripts.push(fs.readFileSync(s.src.split('/').slice(-2).join('/'),'utf8'));else if(!s.src)scripts.push(s.textContent)}w.eval(scripts.join('\n;\n'));
  return dom;
@@ -71,4 +71,22 @@ test('subscription check reports progress, ignores duplicate clicks and restores
  assert.equal(calls,1);assert.match(w.document.getElementById('finovaBillingStatus').textContent,/No se pudo/);
  assert.equal(w.document.querySelector('#finovaTestPlans button').disabled,false);
  }finally{dom.window.close()}
+});
+test('account actions use Identity widget and ignore cached names as proof of login',()=>{
+ const handlers={},opened=[];let current=null;
+ const identity={currentUser:()=>current,open:mode=>opened.push(mode),close(){},on:(name,fn)=>handlers[name]=fn,logout:async()=>{current=null;handlers.logout()}};
+ const dom=app(identity),w=dom.window;try{
+ w.localStorage.setItem('finova_demo_name','Stale user');handlers.init(null);
+ assert.equal(w.document.getElementById('userGreeting').textContent,'');w.openAuth('login');w.openAuth('signup');assert.deepEqual(opened,['login','signup']);
+ current={email:'qa@example.com',user_metadata:{full_name:'<b>QA</b>'}};handlers.login(current);
+ assert.equal(w.document.getElementById('finovaAccountLogin').hidden,true);assert.equal(w.document.getElementById('finovaAccountLogout').hidden,false);assert.equal(w.document.getElementById('userGreeting').querySelector('b'),null);
+ handlers.logout();assert.equal(w.document.getElementById('finovaAccountLogin').hidden,false);assert.equal(w.document.getElementById('userGreeting').textContent,'');
+ }finally{w.close()}
+});
+test('balance curve reflects actual monthly records and business descriptions remain plain text',()=>{
+ const dom=app(),w=dom.window;try{
+ const curve=()=>w.document.querySelector('.finovaBalanceCurve path[stroke]').getAttribute('d');const before=curve();
+ w.document.getElementById('desc').value='Income';w.document.getElementById('amount').value='100';w.document.getElementById('type').value='income';w.addMove();assert.notEqual(curve(),before);
+ w.document.getElementById('finovaBizDesc').value='<b>Sale</b>';w.document.getElementById('finovaBizAmount').value='20';w.finovaAddBusinessMove();assert.ok(w.document.getElementById('finovaBizRecent').textContent.includes('<b>Sale</b>'));assert.equal(w.document.getElementById('finovaBizRecent').textContent.includes('<span'),false);
+ }finally{w.close()}
 });

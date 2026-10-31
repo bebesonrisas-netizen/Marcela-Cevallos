@@ -1,6 +1,11 @@
 (function(){'use strict';
 // Every row: Spanish | English | French | German | Italian | Portuguese | Swedish.
-const rows=`Tu dinero, más claro.|Your money, clearer.|Votre argent, plus clair.|Dein Geld, klarer.|I tuoi soldi, più chiari.|Seu dinheiro, mais claro.|Dina pengar, tydligare.
+const rows=`Cerrar sesión|Sign out|Se déconnecter|Abmelden|Esci|Sair|Logga ut
+No se pudo cerrar la sesión. Vuelve a intentarlo.|Could not sign out. Try again.|Impossible de se déconnecter. Réessayez.|Abmelden fehlgeschlagen. Versuche es erneut.|Impossibile uscire. Riprova.|Não foi possível sair. Tente novamente.|Kunde inte logga ut. Försök igen.
+Inicia sesión para gestionar tu suscripción.|Sign in to manage your subscription.|Connectez-vous pour gérer votre abonnement.|Melde dich an, um dein Abonnement zu verwalten.|Accedi per gestire il tuo abbonamento.|Entre para gerenciar sua assinatura.|Logga in för att hantera din prenumeration.
+No se pudo cargar el acceso. Comprueba tu conexión y vuelve a intentarlo.|Sign-in could not load. Check your connection and try again.|La connexion n’a pas pu se charger. Vérifiez votre connexion et réessayez.|Die Anmeldung konnte nicht geladen werden. Prüfe deine Verbindung und versuche es erneut.|Impossibile caricare l’accesso. Controlla la connessione e riprova.|Não foi possível carregar o acesso. Verifique sua conexão e tente novamente.|Inloggningen kunde inte laddas. Kontrollera anslutningen och försök igen.
+Tus movimientos y documentos permanecen en este navegador.|Your transactions and documents remain in this browser.|Vos opérations et documents restent dans ce navigateur.|Deine Buchungen und Dokumente bleiben in diesem Browser.|I tuoi movimenti e documenti rimangono in questo browser.|Seus movimentos e documentos permanecem neste navegador.|Dina transaktioner och dokument stannar i den här webbläsaren.
+Tu dinero, más claro.|Your money, clearer.|Votre argent, plus clair.|Dein Geld, klarer.|I tuoi soldi, più chiari.|Seu dinheiro, mais claro.|Dina pengar, tydligare.
 Finanzas personales, claras y bajo control.|Personal finances, clear and under control.|Vos finances, claires et maîtrisées.|Persönliche Finanzen, klar im Griff.|Finanze personali chiare e sotto controllo.|Finanças pessoais claras e sob controle.|Privatekonomi, tydlig och under kontroll.
 ABRIR m.cfinova IA|OPEN m.cfinova AI|OUVRIR m.cfinova IA|m.cfinova KI ÖFFNEN|APRI m.cfinova IA|ABRIR m.cfinova IA|ÖPPNA m.cfinova AI
 Modalidad de m.cfinova|m.cfinova mode|Mode m.cfinova|m.cfinova-Modus|Modalità m.cfinova|Modo m.cfinova|m.cfinova-läge
