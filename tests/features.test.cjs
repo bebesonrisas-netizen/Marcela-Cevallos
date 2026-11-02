@@ -119,3 +119,11 @@ test('image preparation falls back to Image when bitmap decoding is unavailable'
  const result=await w.finovaPrepareImage(new w.File(['x'],'ticket.png',{type:'image/png'}));assert.equal(result.type,'image/jpeg');assert.equal(result.name,'ticket.jpg');assert.equal(released,1);
  }finally{w.close()}
 });
+
+test('navigation hides the dashboard when opening forms and restores it on Home',()=>{
+ const dom=app(),w=dom.window;try{
+ const home=w.document.getElementById('inicio');assert.notEqual(w.getComputedStyle(home).display,'none');
+ for(const id of ['mov','docs','fact','assistant','config']){w.show(id);assert.equal(w.getComputedStyle(home).display,'none',id);assert.notEqual(w.getComputedStyle(w.document.getElementById(id)).display,'none',id)}
+ w.show('inicio');assert.equal(w.getComputedStyle(home).display,'grid');
+ }finally{w.close()}
+});
