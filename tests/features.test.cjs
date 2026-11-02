@@ -90,3 +90,32 @@ test('balance curve reflects actual monthly records and business descriptions re
  w.document.getElementById('finovaBizDesc').value='<b>Sale</b>';w.document.getElementById('finovaBizAmount').value='20';w.finovaAddBusinessMove();assert.ok(w.document.getElementById('finovaBizRecent').textContent.includes('<b>Sale</b>'));assert.equal(w.document.getElementById('finovaBizRecent').textContent.includes('<span'),false);
  }finally{w.close()}
 });
+
+test('failed manual saves keep all records and form values unchanged',()=>{
+ const dom=app(),w=dom.window;try{
+ const storage=w.localStorage.getItem('mi_finanzas_v1'),setItem=w.Storage.prototype.setItem;w.Storage.prototype.setItem=()=>{throw Error('quota')};
+ for(const [fn,fields] of [['addMove',{desc:'Retry expense',amount:'12'}],['addLoan',{loanName:'Retry loan',loanTotal:'100',loanPaid:'10',loanPay:'5'}],['addBill',{billName:'Retry bill',billAmt:'15',billDue:'2026-11-20'}]]){
+ for(const [id,v] of Object.entries(fields))w.document.getElementById(id).value=v;w[fn]();for(const [id,v] of Object.entries(fields))assert.equal(w.document.getElementById(id).value,v);
+ }
+ assert.equal(w.localStorage.getItem('mi_finanzas_v1'),storage);
+ w.Storage.prototype.setItem=setItem;w.saveCfg();const saved=JSON.parse(w.localStorage.getItem('mi_finanzas_v1'));assert.equal(saved.moves.length+saved.loans.length+saved.bills.length,0);
+ }finally{w.close()}
+});
+test('invalid loans and bills cannot pollute balances or exported backups',()=>{
+ const dom=app(),w=dom.window;try{
+ for(const [total,paid,payment] of [['-10','0','0'],['100','101','0'],['100','0','-1']]){w.document.getElementById('loanName').value='Invalid';w.document.getElementById('loanTotal').value=total;w.document.getElementById('loanPaid').value=paid;w.document.getElementById('loanPay').value=payment;w.addLoan()}
+ w.document.getElementById('billName').value='Invalid';w.document.getElementById('billAmt').value='-10';w.document.getElementById('billDue').value='2026-11-20';w.addBill();w.saveCfg();const saved=JSON.parse(w.localStorage.getItem('mi_finanzas_v1'));assert.equal(saved.loans.length+saved.bills.length,0);
+ }finally{w.close()}
+});
+test('new file selection supplies a usable name and clears old OCR confirmation',()=>{
+ const dom=app(),w=dom.window;try{
+ Object.defineProperty(w.document.getElementById('docFile'),'files',{value:[new w.File(['x'],'ticket.jpg',{type:'image/jpeg'})]});w.document.getElementById('finovaOCRReview').classList.remove('hidden');w.fileChosen();assert.equal(w.document.getElementById('docName').value,'ticket');assert.equal(w.document.getElementById('finovaOCRReview').classList.contains('hidden'),true);
+ }finally{w.close()}
+});
+test('image preparation falls back to Image when bitmap decoding is unavailable',async()=>{
+ const dom=app(),w=dom.window;try{
+ let released=0;w.URL.revokeObjectURL=()=>released++;w.createImageBitmap=async()=>{throw Error('unsupported')};w.Image=class{constructor(){this.width=400;this.height=200}set src(v){queueMicrotask(()=>this.onload())}};
+ w.HTMLCanvasElement.prototype.getContext=()=>({fillRect(){},drawImage(){}});w.HTMLCanvasElement.prototype.toBlob=function(cb){cb(new w.Blob(['image'],{type:'image/jpeg'}))};
+ const result=await w.finovaPrepareImage(new w.File(['x'],'ticket.png',{type:'image/png'}));assert.equal(result.type,'image/jpeg');assert.equal(result.name,'ticket.jpg');assert.equal(released,1);
+ }finally{w.close()}
+});
