@@ -128,7 +128,7 @@ Pago|Payment|Paiement|Zahlung|Pagamento|Pagamento|Betalning
 Otro|Other|Autre|Sonstiges|Altro|Outro|Övrigt
 Guardar documento|Save document|Enregistrer le document|Dokument speichern|Salva documento|Salvar documento|Spara dokument
 m.cfinova IA · Leer ticket o factura|m.cfinova AI · Read receipt or bill|m.cfinova IA · Lire reçu ou facture|m.cfinova KI · Beleg oder Rechnung lesen|m.cfinova IA · Leggi scontrino o fattura|m.cfinova IA · Ler recibo ou fatura|m.cfinova AI · Läs kvitto eller faktura
-Selecciona una imagen para reconocer sus datos. Revisa el resultado antes de guardar.|Choose an image to read its data. Review the result before saving.|Choisissez une image. Vérifiez les données reconnues avant de les enregistrer.|Wähle ein Bild. Prüfe die erkannten Daten vor dem Speichern.|Scegli un’immagine. Controlla i dati riconosciuti prima di salvarli.|Escolha uma imagem. Revise os dados reconhecidos antes de salvar.|Välj en bild. Granska de tolkade uppgifterna innan du sparar.
+Selecciona una imagen o PDF (hasta 5 páginas y 10 MB) para reconocer sus datos. Revisa el resultado antes de guardar.|Choose an image or PDF (up to 5 pages and 10 MB). Review the result before saving.|Choisissez une image ou un PDF (5 pages et 10 Mo maximum). Vérifiez avant d’enregistrer.|Wähle ein Bild oder PDF (bis zu 5 Seiten und 10 MB). Prüfe vor dem Speichern.|Scegli un’immagine o PDF (fino a 5 pagine e 10 MB). Controlla prima di salvare.|Selecione uma imagem ou PDF (até 5 páginas e 10 MB). Revise antes de salvar.|Välj en bild eller PDF (upp till 5 sidor och 10 MB). Granska före sparande.
 Revisar datos reconocidos|Review recognised data|Vérifier les données reconnues|Erkannte Daten prüfen|Controlla dati riconosciuti|Revisar dados reconhecidos|Granska tolkade uppgifter
 Confirmar y registrar gasto|Confirm and record expense|Confirmer et enregistrer la dépense|Bestätigen und Ausgabe erfassen|Conferma e registra spesa|Confirmar e registrar despesa|Bekräfta och registrera utgift
 Cancelar|Cancel|Annuler|Abbrechen|Annulla|Cancelar|Avbryt
@@ -245,3 +245,4 @@ window.FinovaI18n={dict,langs,tr:translate,apply,get language(){return current}}
 window.setLang=function(){current=langs.includes(document.getElementById('lang').value)?document.getElementById('lang').value:'es';localStorage.setItem('finova_language',current);apply();window.dispatchEvent(new Event('finova:language'))};
 const saved=localStorage.getItem('finova_language');if(langs.includes(saved))document.getElementById('lang').value=saved;window.setLang();
 })();
+

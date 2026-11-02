@@ -127,3 +127,15 @@ test('navigation hides the dashboard when opening forms and restores it on Home'
  w.show('inicio');assert.equal(w.getComputedStyle(home).display,'grid');
  }finally{w.close()}
 });
+test('PDF receipt adapter prepares a review without requiring Tesseract or saving automatically',async()=>{
+ const dom=app(),w=dom.window;try{
+ const file=new w.File(['pdf'],'invoice.pdf',{type:'application/pdf'});Object.defineProperty(w.document.getElementById('docFile'),'files',{value:[file],configurable:true});let calls=0;
+ w.FinovaPDF.read=async(f,options)=>{assert.equal(f,file);assert.equal(options.signal.aborted,false);calls++;return 'PDF SHOP\n2026-11-02\nTOTAL 24,20'};
+ await w.finovaReadReceipt();assert.equal(calls,1);assert.equal(w.document.getElementById('finovaAmount').value,'24.2');assert.equal(w.document.getElementById('finovaOCRReview').classList.contains('hidden'),false);assert.equal(w.localStorage.getItem('mi_finanzas_v1'),null);w.finovaConfirmExpense();assert.equal(JSON.parse(w.localStorage.getItem('mi_finanzas_v1')).moves[0].amount,24.2);
+ }finally{w.close()}
+});
+test('receipt results from an earlier selected file cannot be confirmed for a new file',async()=>{
+ const dom=app(),w=dom.window;try{
+ const input=w.document.getElementById('docFile');Object.defineProperty(input,'files',{value:[new w.File(['pdf'],'one.pdf',{type:'application/pdf'})],configurable:true});let finish;w.FinovaPDF.read=()=>new Promise(resolve=>{finish=resolve});const running=w.finovaReadReceipt();await Promise.resolve();Object.defineProperty(input,'files',{value:[new w.File(['pdf'],'two.pdf',{type:'application/pdf'})],configurable:true});w.fileChosen();finish('SHOP TOTAL 24,20');await running;assert.equal(w.document.getElementById('finovaOCRReview').classList.contains('hidden'),true);w.finovaConfirmExpense();assert.equal(w.localStorage.getItem('mi_finanzas_v1'),null);
+ }finally{w.close()}
+});
