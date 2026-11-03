@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Compra una licencia de acceso permanente a m.cfinova con un único pago.">
+<title>Licencia de pago único — m.cfinova</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#211b37;background:#f7f5ff}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:20px}.card{width:min(100%,560px);padding:clamp(24px,6vw,48px);background:white;border:1px solid #eee8fa;border-radius:24px;box-shadow:0 12px 40px #39208012}h1{margin:0 0 12px;color:#5228a8}p{line-height:1.6;color:#625b72}.badge{display:inline-block;padding:7px 12px;background:#f0eaff;color:#6136bd;border-radius:999px;font-weight:700;font-size:13px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}button,a{border:0;border-radius:12px;padding:13px 18px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none}.primary{background:#7948e9;color:white}.secondary{background:#f0eaff;color:#5731aa}button:disabled{opacity:.55;cursor:wait}#status{min-height:24px;margin-top:18px;font-size:14px}small{color:#77718a}
+</style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body><main class="card">
+<span class="badge">Un pago, sin renovación</span>
+<h1>Acceso permanente a m.cfinova</h1>
+<p>Compra una única vez la licencia de acceso permanente al plan Premium. No es una suscripción y no se renueva automáticamente. El importe final y las condiciones aparecerán en la página segura de Stripe antes de confirmar el pago.</p>
+<p><strong>La licencia queda asociada a tu cuenta m.cfinova.</strong> Inicia sesión con la misma cuenta después de pagar. El acceso se activa cuando Stripe confirma el pago; si se reembolsa íntegramente, se revoca.</p>
+<div class="actions"><button class="primary" id="buy" type="button">Comprar con pago único</button><button class="secondary" id="login" type="button">Iniciar sesión</button><a class="secondary" href="/">Volver a la aplicación</a></div>
+<div id="status" role="status" aria-live="polite"></div>
+<small>No introduzcas datos de tarjeta en esta página; el pago se procesa en Stripe.</small>
+</main>
+<script>
+'use strict';
+const status=document.getElementById('status'),buy=document.getElementById('buy');
+async function start(){
+ buy.disabled=true;status.textContent='Comprobando tu sesión…';
+ try{
+  const user=window.netlifyIdentity?.currentUser();
+  if(!user){status.textContent='Inicia sesión o crea una cuenta confirmada para comprar.';window.netlifyIdentity?.open('login');return}
+  const jwt=await user.jwt();
+  const response=await fetch('/.netlify/functions/create-one-time-checkout',{method:'POST',headers:{Authorization:'Bearer '+jwt,'Content-Type':'application/json'},body:'{}'});
+  const result=await response.json();
+  if(!response.ok||!result.url)throw new Error(result.error||'No se pudo iniciar el pago.');
+  const url=new URL(result.url);if(url.hostname!=='checkout.stripe.com')throw new Error('Stripe devolvió un destino no permitido.');
+  location.assign(url.href);
+ }catch(error){status.textContent=error.message==='Failed to fetch'?'No se pudo conectar. Inténtalo de nuevo.':error.message}
+ finally{buy.disabled=false}
+}
+buy.addEventListener('click',start);
+document.getElementById('login').addEventListener('click',()=>window.netlifyIdentity?.open('login'));
+window.netlifyIdentity?.on('init',user=>{if(user)status.textContent='Sesión iniciada. Puedes comprar la licencia de pago único.'});
+</script></body></html>
