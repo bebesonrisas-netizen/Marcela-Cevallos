@@ -7,7 +7,6 @@ const LIVE_ACCOUNT='acct_1UNYwe0G40NrtpeH';
 function mode(){return process.env.FINOVA_BILLING_MODE??'test'}
 function isLive(){return mode()==='live'}
 function portalConfiguration(){const value=process.env.STRIPE_PORTAL_CONFIGURATION;if(isLive()){if(!value||value===TEST_PORTAL_CONFIGURATION)throw error(503,'Falta configurar el portal de producción.','live_portal_required');}return value||TEST_PORTAL_CONFIGURATION}
-// Public account IDs and sandbox defaults are not credentials. Live mode requires explicit hosting configuration.
 const TEST_PORTAL_CONFIGURATION='bpc_1UTp1i0WT1XqdqLbOgaNDm1w';
 const plans=Object.freeze({premium_monthly:'finova_premium_monthly',premium_yearly:'finova_premium_yearly',pro_monthly:'finova_pro_monthly',pro_yearly:'finova_pro_yearly'});
 const events=Object.freeze(['checkout.session.completed','checkout.session.async_payment_succeeded','checkout.session.async_payment_failed','customer.subscription.created','customer.subscription.updated','customer.subscription.deleted','invoice.paid','invoice.payment_failed']);
@@ -50,7 +49,7 @@ async function requirePrice(stripe,lookupKey,liveMode=isLive()){
   const data=Array.isArray(result?.data)?result.data:[];
   if(result?.has_more||data.length!==1)throw error(503,'El precio de este plan no está disponible de forma única en el entorno actual.');
   const price=data[0];
-  if(!price?.id||price.active===false||price.currency!=='eur'||price.livemode!==liveMode||!price.recurring||price.lookup_key!=null&&price.lookup_key!==key)throw error(503,'El precio de este plan no está disponible en el entorno actual.');
+  if(!price?.id||price.active===false||price.currency!=='eur'||price.livemode!==liveMode||!price.recurring||(price.lookup_key!=null&&price.lookup_key!==key))throw error(503,'El precio de este plan no está disponible en el entorno actual.');
   return price;
 }
 async function entitlement(stripe,customer){
