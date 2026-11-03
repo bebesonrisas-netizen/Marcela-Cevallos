@@ -1,5 +1,6 @@
 'use strict';
 const b=require('../lib/billing');
+const {createHash}=require('node:crypto');
 exports.handler=event=>b.run(event,'POST',async()=>{
  const stripe=b.client();
  await b.verifyAccount(stripe);
@@ -11,15 +12,17 @@ exports.handler=event=>b.run(event,'POST',async()=>{
  const customer=await b.customerFor(stripe,user,true);
  const current=await b.entitlement(stripe,customer.id);
  if(current.plan!=='free')throw b.error(409,'Ya tienes una suscripción. Gestiona el plan existente.');
- // Reuse a matching open Checkout session to avoid duplicate subscriptions on retries.
+ // Reuse an open session for this user and plan; the deterministic idempotency key
+ // also prevents concurrent requests from creating duplicate Checkout sessions.
  const sessions=await stripe.checkout.sessions.list({customer:customer.id,status:'open',limit:100});
  if(sessions.has_more)throw b.error(409,'Cierra los pagos pendientes antes de continuar.');
- for(const session of sessions.data){
+ for(const session of sessions.data||[]){
   if(session.metadata?.app==='finova'&&session.metadata.plan===body.plan&&session.url){
    return b.response(200,{url:session.url,test:!b.isLive()});
   }
  }
- // Billing details remain with Stripe, never in the browser's financial records.
+ const idempotencyKey='finova-checkout-'+createHash('sha256')
+  .update(`${user.id}:${body.plan}:${price.id}:${b.isLive()?'live':'test'}`).digest('hex');
  const created=await stripe.checkout.sessions.create({
   mode:'subscription',
   branding_settings:{display_name:'m.cfinova',button_color:'#713cce',background_color:'#faf7ff'},
@@ -33,7 +36,7 @@ exports.handler=event=>b.run(event,'POST',async()=>{
   client_reference_id:String(user.id),
   success_url:b.ORIGIN+'/?checkout=success&billing=1',
   cancel_url:b.ORIGIN+'/?checkout=cancel'
- },{idempotencyKey:b.identifier()});
+ },{idempotencyKey});
  if(!created.url)throw b.error(502,'Stripe no devolvió un enlace de pago válido.');
  return b.response(200,{url:created.url,test:!b.isLive()});
 });
