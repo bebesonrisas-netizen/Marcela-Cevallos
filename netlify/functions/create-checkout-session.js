@@ -1,6 +1,5 @@
 'use strict';
 const b=require('../lib/billing');
-const resolvePrice=require('../lib/price-validation');
 exports.handler=event=>b.run(event,'POST',async()=>{
  const stripe=b.client();
  await b.verifyAccount(stripe);
@@ -8,15 +7,15 @@ exports.handler=event=>b.run(event,'POST',async()=>{
  let body;
  try{body=JSON.parse(event.body||'{}')}catch{throw b.error(400,'Solicitud no válida.')}
  const lookup=b.planLookupKey(body.plan);
- const price=await resolvePrice(stripe,lookup,b.isLive());
+ const price=await b.requirePrice(stripe,lookup);
  const customer=await b.customerFor(stripe,user,true);
  const current=await b.entitlement(stripe,customer.id);
  if(current.plan!=='free')throw b.error(409,'Ya tienes una suscripción. Gestiona el plan existente.');
- // One open checkout per user/plan prevents accidental duplicate subscriptions.
+ // Reuse a matching open Checkout session to avoid duplicate subscriptions on retries.
  const sessions=await stripe.checkout.sessions.list({customer:customer.id,status:'open',limit:100});
  if(sessions.has_more)throw b.error(409,'Cierra los pagos pendientes antes de continuar.');
  for(const session of sessions.data){
-  if(session.metadata?.app==='finova'&&session.metadata.plan===body.plan&&session.branding_settings?.display_name==='m.cfinova'&&session.url){
+  if(session.metadata?.app==='finova'&&session.metadata.plan===body.plan&&session.url){
    return b.response(200,{url:session.url,test:!b.isLive()});
   }
  }
